@@ -14,13 +14,11 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->id('id_user'); // Mengganti id default dengan id_user
+            $table->string('username')->unique(); // Mengganti name dengan username dan menambahkan unique
             $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->integer('role'); // Menambahkan role
+            $table->timestamps(); // Menambahkan created_at dan updated_at secara otomatis
         });
     }
 
@@ -34,3 +32,4 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('users');
     }
 }
+

@@ -15,7 +15,7 @@
 <body class = "body bg-white dark:bg-[#0F172A]">
     <div class = "fixed w-full z-30 flex bg-white dark:bg-[#0F172A] p-2 items-center justify-center h-16 px-10">
         <div class = "logo ml-12 dark:text-white  transform ease-in-out duration-500 flex-none h-full flex items-center justify-center">
-            NERVE
+            NERVEaaa
         </div>
         <!-- SPACER -->
         <div class = "grow h-full flex items-center justify-center"></div>
@@ -58,7 +58,7 @@
             </div>
             <div  class = "flex items-center space-x-3 group bg-gradient-to-r dark:from-cyan-500 dark:to-blue-500 from-indigo-500 via-purple-500 to-purple-500  pl-10 pr-2 py-1 rounded-full text-white  ">
                 <div class= "transform ease-in-out duration-300 mr-12">
-                    NERVE
+                    NERVEaaa
                 </div>
             </div>
         </div>
