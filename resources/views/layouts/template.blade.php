@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -81,7 +81,7 @@
             </a>
           </li>
           <li>
-            <a class="text-white" href="{{ route('ps.student.data','[id]') }}">
+            <a class="text-white" href="">
               <i class="bi bi-person mr-2"></i>
               Data Siswa
           </a>
@@ -89,7 +89,7 @@
 
           </li>
           <li>
-            <a class="text-white" href="{{route('ps.lates.rekap')}}">
+            <a class="text-white" href="">
               <i class="bi bi-newspaper mr-2"></i>
               Data Keterlambatan
             </a>
@@ -106,7 +106,7 @@
                 Home / Dashboard
               </h6>
           </div>
-          <a href="{{ route('logout') }}" id="admin-logo">
+          <a href="" id="admin-logo">
               <i class="bi bi-person"></i> Logout
           </a>
           
@@ -126,15 +126,15 @@
                 Data Master
             </a>
             <ul class="submenu" id="submenu-master"> 
-                <li><a class="dropdown-item" href="{{ route('rombel.index') }}" style="background: transparent">Data Rombel</a></li>
-                <li><a class="dropdown-item" href="{{ route('rayon.index') }}" style="background: transparent">Data Rayon</a></li>
-                <li><a class="dropdown-item" href="{{ route('admin.student.index') }}" style="background: transparent">Data Siswa</a></li>
-                <li><a class="dropdown-item" href="{{ route('user.index') }}" style="background: transparent">Data User</a></li>
+                <li><a class="dropdown-item" href="" style="background: transparent">Data Rombel</a></li>
+                <li><a class="dropdown-item" href="" style="background: transparent">Data Rayon</a></li>
+                <li><a class="dropdown-item" href="" style="background: transparent">Data Siswa</a></li>
+                <li><a class="dropdown-item" href="" style="background: transparent">Data User</a></li>
             </ul>
           </li>
         
           <li>
-            <a class="text-white" href="{{route('admin.lates.index')}}">
+            <a class="text-white" href="">
               <i class="bi bi-newspaper mr-2"></i>
               Data Keterlambatan
             </a>
@@ -150,7 +150,7 @@
               Home / Dashboard
             </h6>
         </div>
-        <a href="{{ route('logout') }}" id="admin-logo">
+        <a href="" id="admin-logo">
             <i class="bi bi-person"></i> Logout
         </a>
         @endif
@@ -192,4 +192,4 @@
       
 
   </body>
-</html>
+</html> --}}

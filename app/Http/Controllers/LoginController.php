@@ -23,28 +23,22 @@ class LoginController extends Controller
     {
         //validasi
         $request->validate([
-            'username' => 'required',
+            'email' => 'required',
             'password' => 'required',
             ]);
             //ambil value dari input dan simpan sebuah variable
-            $user = $request->only(['username','password']);
+            $user = $request->only(['email','password']);
     
-    
-            //
             if (Auth::attempt($user)) {
-                return redirect('index');
+                return redirect()->route('dashboard')->with('Success', 'Selamat Datang ' . Auth::user()->username);
             }else{
                 return redirect()->back()->with('failed', 'username dan Password tidak sesuai. silahkan coba lagi');
             }
     }
 
-    public function index()
+    public function dashboard()
     {
-        //panggil data yang mau di tampilkan 
-        
-
-        //html yang di munculkan di index.balde.php folder user, lalu kirim data yang di ambil malalui (isi compact dengan nama variabel)
-        return view('welcome');
+        return view('layouts.template_fix');
     }
 
     /**

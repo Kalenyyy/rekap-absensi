@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SuperadminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,28 +15,24 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', function (){
+Route::get('/', function () {
     return view('login');
 })->name('login');
 // ->middleware('guest')
 
-Route::post('/login-auth', [LoginController::class , 'loginAuth'])->name('login.auth');
+Route::post('/login-auth', [LoginController::class, 'loginAuth'])->name('login.auth');
 
-Route::middleware('IsLogin')->group(function (){
-    
+Route::middleware('IsLogin')->group(function () {
 
-Route::get('/index', [LoginController::class , 'index'])->name('welcome');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
+    // Route::get('/logout', [LoginController::class , 'logout'])->name('logout');
 
-Route::get('/logout', [LoginController::class , 'logout'])->name('logout');
-
-    Route::middleware("AdminMiddleware")->group(function(){
-
-    
+    Route::middleware("IsAdmin")->group(function () {
+        Route::prefix('users')->name('admin.user.')->group(function() {
+            Route::get('/', [SuperadminController::class, 'index'])->name('index');
+        });
     });
-   
-    Route::middleware(['GuruMiddleware'])->group(function () {
-    
-    });   
-    
 
+    Route::middleware(['IsGuru'])->group(function () {});
 });

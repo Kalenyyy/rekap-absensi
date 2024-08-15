@@ -18,7 +18,7 @@ class GuruMiddleware
     public function handle(Request $request, Closure $next)
     {
         
-        if (Auth::user()->role == "guru") {
+        if (Auth::user()->role == "guru_ps" || Auth::user()->role == "guru_ps") {
             return $next($request);
         }else{
             return redirect('/dashborad')->with("failed","Anda bukan admin!");

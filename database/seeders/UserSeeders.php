@@ -16,8 +16,9 @@ class UserSeeders extends Seeder
         User::create([
             //colum table db => value
             'id_user' => "1",
-            'username' => "admin@gmail.com",
-            'role' => 1,
+            'email' => "admin@gmail.com",
+            'username' => "admin",
+            'role' => 'admin',
             "password" => Hash::make("admin"),
             //cara lain ekpripsi : bcyrpt
 
@@ -25,9 +26,10 @@ class UserSeeders extends Seeder
         ]);
         User::create([
             'id_user' => "2",
-            'username' => "guru@gmail.com",
-            'role' => 2,
-            "password" => Hash::make("guru"),
+            'email' => "guru_kejuruan@gmail.com",
+            'username' => "Angger Kalehandya S.Kom",
+            'role' => 'guru_kejuruan',
+            "password" => Hash::make("guru_kejuruan"),
 
 
         ]);

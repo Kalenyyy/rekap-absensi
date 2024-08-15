@@ -15,9 +15,10 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('id_user'); // Mengganti id default dengan id_user
-            $table->string('username')->unique(); // Mengganti name dengan username dan menambahkan unique
+            $table->string('username'); // Mengganti name dengan username dan menambahkan unique
+            $table->string('email')->unique(); // Mengganti name dengan username dan menambahkan unique
             $table->string('password');
-            $table->integer('role'); // Menambahkan role
+            $table->enum('role', ['guru_ps', 'guru_kejuruan', 'admin']); // Menambahkan role
             $table->timestamps(); // Menambahkan created_at dan updated_at secara otomatis
         });
     }
