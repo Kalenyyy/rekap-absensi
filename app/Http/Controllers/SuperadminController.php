@@ -17,6 +17,10 @@ class SuperadminController extends Controller
         return view('admin.users.index');
     }
 
+    public function indexDataMaster() {
+        return view('admin.data_master.index');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

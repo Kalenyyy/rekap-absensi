@@ -5,49 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Login App</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
 </head>
 
 <body>
-    {{-- <div class="container">
-    <div class="row justify-content-center mt-4">
-        <div class="col-md-6">
-            <div class="card p-4 shadow">
-                <div class="text-center mb-4">
-                    <img src="{{ asset('uploads/login.jpeg') }}" alt="Your Logo" class="img-fluid" style="max-width: 100px;">
-                </div>
-                @if (Session::get('failed'))
-                    <div class="alert alert-danger">{{ Session::get('failed') }}</div>
-                @endif
-                <form action="{{ route('login.auth') }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="username" class="form-label">username:</label>
-                        <input type="username" class="form-control" id="username" name="username" value="{{ old('username') }}" required>
-                        @error('username')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password:</label>
-                        <input type="password" class="form-control" id="password" name="password" value="{{ old('password') }}" required>
-                        @error('password')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> --}}
-
+    
     <!-- Container utama -->
     <div class="relative min-h-screen">
         <!-- Div untuk gambar dengan efek blur -->
-        <div class="absolute inset-0 bg-no-repeat bg-cover bg-center filter"
+        <div class="absolute inset-0 bg-no-repeat bg-cover bg-center filter animate-fade animate-once animate-duration-[1000ms] animate-ease-in-out"
             style="background-image: url({{ asset('assets/svg/image-1.svg') }}); z-index: -1;">
         </div>
 
@@ -59,15 +27,15 @@
             <div class="flex-col flex self-center p-10 sm:max-w-5xl xl:max-w-2xl">
                 <div class="self-start hidden lg:flex flex-col text-white">
                     <img src="" class="mb-3">
-                    <h1 class="mb-3 font-bold text-5xl">Hi ? Welcome Back </h1>
-                    <p class="pr-3">Lorem ipsum is placeholder text commonly used in the graphic, print,
+                    <h1 class="mb-3 font-bold text-5xl animate-fade-down animate-once animate-duration-[1800ms] animate-ease-in-out animate-delay-[400ms]">Hi ? Welcome Back </h1>
+                    <p class="pr-3 animate-fade-up animate-once animate-duration-[1000ms] animate-ease-in-out animate-delay-[400ms]">Lorem ipsum is placeholder text commonly used in the graphic, print,
                         and publishing industries for previewing layouts and visual mockups.</p>
                 </div>
             </div>
-            <div class="flex justify-center self-center">
+            <div class="flex justify-center self-center animate-fade-left animate-once animate-duration-[1500ms] animate-delay-[800ms] animate-ease-in-out animate-alternate">
                 <div class="p-12 bg-white mx-auto rounded-2xl w-100">
                     <div class="mb-4">
-                        <h3 class="font-semibold text-2xl text-gray-800">Sign In</h3>
+                        <h3 class="font-semibold text-2xl text-gray-800 animate-bounce animate-infinite animate-duration-[1500ms] animate-ease-in-out">Sign In</h3>
                         <p class="text-gray-500">Please sign in to your account.</p>
                     </div>
                     <form action="{{ route('login.auth') }}" method="post">

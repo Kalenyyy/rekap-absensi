@@ -32,6 +32,10 @@ Route::middleware('IsLogin')->group(function () {
         Route::prefix('users')->name('admin.user.')->group(function() {
             Route::get('/', [SuperadminController::class, 'index'])->name('index');
         });
+
+        Route::prefix('data-master')->name('admin.data-master.')->group(function() {
+            Route::get('/', [SuperadminController::class, 'indexDataMaster'])->name('index');
+        });
     });
 
     Route::middleware(['IsGuru'])->group(function () {});
