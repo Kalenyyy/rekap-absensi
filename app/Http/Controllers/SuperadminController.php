@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\rayon;
+use App\Models\rombel;
 use App\Models\superadmin;
 use Illuminate\Http\Request;
 
@@ -17,73 +19,74 @@ class SuperadminController extends Controller
         return view('admin.users.index');
     }
 
-    public function indexDataMaster() {
-        return view('admin.data_master.index');
+    public function indexDataMaster(Request $request)
+    {
+        $search = $request->input('search_rayon');
+
+        $rayons = Rayon::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('name_rayon', 'like', '%' . $search . '%');
+            })
+            ->get();
+
+        $rombels = rombel::all();
+
+        return view('admin.data_master.index', compact('rayons', 'rombels'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function storeRayon(Request $request)
     {
-        //
+        $request->validate([
+            'name_rayon' => 'required'
+        ]);
+
+        $rayonStore = [
+            'name_rayon' => $request->input('name_rayon'),
+        ];
+        rayon::create($rayonStore);
+
+        return redirect()->back()->with('success', 'Data Rayon Sudah Ditambah');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function getDataRayon($id)
     {
-        //
+
+        $rayon = rayon::where('id', $id)->first();
+        return response()->json([
+            'rayon' => $rayon
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\superadmin  $superadmin
-     * @return \Illuminate\Http\Response
-     */
-    public function show(superadmin $superadmin)
+    public function updateDataRayon(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'nama_rayon' => 'required|string|max:255',
+        ]);
+
+        $rayon = Rayon::findOrFail($id);
+
+        $rayon->update([
+            'name_rayon' => $request->input('nama_rayon'),
+        ]);
+
+        // Set session dengan pesan sukses
+        session()->flash('success', 'Data rayon berhasil diperbarui');
+
+        return response()->json([
+            'message' => 'Data rayon berhasil diperbarui',
+            'rayon' => $rayon
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\superadmin  $superadmin
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(superadmin $superadmin)
+    public function deleteDataRayon($id)
     {
-        //
-    }
+        $rayon = Rayon::findOrFail($id);
+        $rayon->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\superadmin  $superadmin
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, superadmin $superadmin)
-    {
-        //
-    }
+        session()->flash('success', 'Data rayon berhasil dihapus');
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\superadmin  $superadmin
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(superadmin $superadmin)
-    {
-        //
+        return response()->json([
+            'message' => 'Rayon berhasil dihapus!'
+        ]);
     }
 }

@@ -35,6 +35,10 @@ Route::middleware('IsLogin')->group(function () {
 
         Route::prefix('data-master')->name('admin.data-master.')->group(function() {
             Route::get('/', [SuperadminController::class, 'indexDataMaster'])->name('index');
+            Route::post('/store', [SuperadminController::class, 'storeRayon'])->name('store');
+            Route::get('/edit-rayon/{id}', [SuperadminController::class, 'getDataRayon']);
+            Route::patch('/update-rayon/{id}', [SuperadminController::class, 'updateDataRayon']);
+            Route::delete('/delete-rayon/{id}', [SuperadminController::class, 'deleteDataRayon']);
         });
     });
 
