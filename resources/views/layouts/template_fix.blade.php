@@ -57,14 +57,14 @@
         </div>
     </div>
     <aside
-        class="w-60 -translate-x-48 fixed transition transform ease-in-out duration-1000 z-50 flex h-screen bg-[#1E293B] ">
+        class="w-60 -translate-x-48 fixed transition transform ease-in-out duration-1000 z-50 flex h-screen bg-[#667BC6] ">
         <!-- open sidebar button -->
         <div
-            class="max-toolbar translate-x-24 scale-x-0 w-full -right-6 transition transform ease-in duration-300 flex items-center justify-between border-4 border-white dark:border-[#0F172A] bg-[#1E293B]  absolute top-2 rounded-full h-12">
+            class="max-toolbar translate-x-24 scale-x-0 w-full -right-6 transition transform ease-in duration-300 flex items-center justify-between border-4 border-white dark:border-[#0F172A] bg-[#667BC6]  absolute top-2 rounded-full h-12">
 
             <div class="flex pl-4 items-center space-x-2 ">
                 <div>
-                    <div onclick="setDark('dark')"
+                    {{-- <div onclick="setDark('dark')"
                         class="moon text-white hover:text-blue-500 dark:hover:text-[#38BDF8]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3}
                             stroke="currentColor" class="w-4 h-4">
@@ -79,7 +79,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
                         </svg>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class ="text-white hover:text-blue-500 dark:hover:text-[#38BDF8]">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3}
@@ -90,14 +90,14 @@
                 </div>
             </div>
             <div
-                class ="flex items-center space-x-3 group bg-gradient-to-r dark:from-cyan-500 dark:to-blue-500 from-indigo-500 via-purple-500 to-purple-500  pl-10 pr-2 py-1 rounded-full text-white  ">
+                class ="flex items-center space-x-3 group bg-gradient-to-r dark:from-cyan-500 dark:to-blue-500 from-indigo-500 via-white-500 to-white-500  pl-10 pr-2 py-1 rounded-full text-white  ">
                 <div class= "transform ease-in-out duration-300 mr-12">
                     Wikrama
                 </div>
             </div>
         </div>
         <div onclick="openNav()"
-            class="-right-6 transition transform ease-in-out duration-500 flex border-4 border-white dark:border-[#0F172A] bg-[#1E293B] dark:hover:bg-blue-500 hover:bg-purple-500 absolute top-2 p-3 rounded-full text-white hover:rotate-45">
+            class="-right-6 transition transform ease-in-out duration-500 flex border-4 border-white dark:border-[#0F172A] bg-[#667BC6] dark:hover:bg-blue-500 hover:bg-white-500 absolute top-2 p-3 rounded-full text-white hover:rotate-45">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3}
                 stroke="currentColor" class="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round"
@@ -106,9 +106,9 @@
         </div>
         <!-- MAX SIDEBAR-->
         <div class="max hidden text-white mt-20 flex-col space-y-2 w-full h-[calc(100vh)]">
-            <a href="{{ route('dashboard') }}">
+            <a href="{{ route('dashboard.index') }}">
                 <div
-                    class="hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                    class="hover:ml-4 w-full text-white hover:text-white-500 dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                         stroke="currentColor" class="w-4 h-4">
                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -120,7 +120,7 @@
                 </div>
             </a>
             <div
-                class="hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                class="hover:ml-4 w-full text-white hover:text-white-500 dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -131,7 +131,7 @@
                 </div>
             </div>
             <div
-                class="hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                class="hover:ml-4 w-full text-white hover:text-white-500 dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
@@ -143,7 +143,7 @@
             </div>
             <a href="{{ route('admin.user.index') }}">
                 <div
-                    class="hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                    class="hover:ml-4 w-full text-white hover:text-white-500 dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -158,7 +158,7 @@
             </a>
             <a href="{{ route('admin.data-master.index') }}">
                 <div
-                    class="hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                    class="hover:ml-4 w-full text-white hover:text-white-500 dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -175,7 +175,7 @@
         <!-- MINI SIDEBAR-->
         <div class="mini mt-20 flex flex-col space-y-2 w-full h-[calc(100vh)]">
             <div
-                class="hover:ml-4 justify-end pr-5 text-white hover:text-purple-500 dark:hover:text-blue-500 w-full bg-[#1E293B] p-3 rounded-full transform ease-in-out duration-300 flex">
+                class="hover:ml-4 justify-end pr-5 text-white hover:text-white-500 dark:hover:text-blue-500 w-full bg-[#667BC6] p-3 rounded-full transform ease-in-out duration-300 flex">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                     stroke="currentColor" class="w-4 h-4">
                     <path strokeLinecap="round" strokeLinejoin="round"
@@ -183,7 +183,7 @@
                 </svg>
             </div>
             <div
-                class="hover:ml-4 justify-end pr-5 text-white hover:text-purple-500 dark:hover:text-blue-500 w-full bg-[#1E293B] p-3 rounded-full transform ease-in-out duration-300 flex">
+                class="hover:ml-4 justify-end pr-5 text-white hover:text-white-500 dark:hover:text-blue-500 w-full bg-[#667BC6] p-3 rounded-full transform ease-in-out duration-300 flex">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -191,7 +191,7 @@
                 </svg>
             </div>
             <div
-                class="hover:ml-4 justify-end pr-5 text-white hover:text-purple-500 dark:hover:text-blue-500 w-full bg-[#1E293B] p-3 rounded-full transform ease-in-out duration-300 flex">
+                class="hover:ml-4 justify-end pr-5 text-white hover:text-white-500 dark:hover:text-blue-500 w-full bg-[#667BC6] p-3 rounded-full transform ease-in-out duration-300 flex">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
@@ -202,10 +202,10 @@
     </aside>
     <!-- CONTENT -->
     <div class ="content ml-12 transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4">
-        <nav class="flex px-5 py-3 text-gray-700  rounded-lg bg-gray-50 dark:bg-[#1E293B] " aria-label="Breadcrumb">
+        <nav class="flex px-5 py-3 text-gray-700  rounded-lg bg-gray-50 dark:bg-[#667BC6] " aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
                 <li class="inline-flex items-center">
-                    <a href="{{ route('dashboard') }}"
+                    <a href="{{ route('dashboard.index') }}"
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                         <svg class = "w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -216,7 +216,7 @@
                         Home
                     </a>
                 </li>
-                @if (request()->is('dashboard'))
+                @if (request()->is('dashboard.index'))
                 <li>
                     <div class="flex items-center">
                         <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
