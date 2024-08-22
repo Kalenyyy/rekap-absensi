@@ -20,8 +20,8 @@
 @endsection
 
 @section('content')
-    <div class="flex justify-center items-center mt-4" style="margin-top: 10px;">
-        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-screen-lg h-[90vh] flex flex-col">
+    <div class="flex justify-center items-center mt-4 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-screen-lg h-auto flex flex-col">
 
             <div class="text-center border-b-2 border-[#667BC3] pb-4">
                 <h1 class="text-4xl font-bold text-[#667BC3]">ABSENSI FACE RECOGNITION</h1>
@@ -30,28 +30,19 @@
             <div class="text-center mt-6 mb-4">
                 <h2 class="text-2xl font-bold text-[#667BC3]">ROMBEL PPLG</h2>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 flex-grow">
-                <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
-                    PPLG XI-1
-                </a>
-                <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
-                    PPLG XI-2
-                </a>
-                <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
-                    PPLG XI-3
-                </a>
-                <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
-                    PPLG XI-4
-                </a>
-                <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
-                    PPLG XI-5
-                </a>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                @foreach($rombel as $r)
+                    @if(Str::contains($r->name_rombel, 'XI') && !Str::contains($r->name_rombel, 'XII'))
+                        <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
+                            {{ $r->name_rombel }}
+                        </a>
+                    @endif
+                @endforeach
             </div>
-            <div class="mt-4 text-center">
+            <div class="flex justify-center mt-4">
                 <a href="{{ route('dashboard.index') }}" class="bg-gray-300 text-gray-800 text-lg font-medium rounded-lg py-2 px-4 transition-transform duration-300 hover:scale-105">
                     Back
                 </a>
-                
             </div>
         </div>
     </div>
