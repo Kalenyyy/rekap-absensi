@@ -31,24 +31,13 @@
                 <h2 class="text-2xl font-bold text-[#667BC3]">ROMBEL PPLG</h2>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
-                    PPLG XII-1
-                </a>
-                <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
-                    PPLG XII-2
-                </a>
-                <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
-                    PPLG XII-3
-                </a>
-                <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
-                    PPLG XII-4
-                </a>
-                <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
-                    PPLG XII-5
-                </a>
-                <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
-                    PPLG XII-6
-                </a>
+                @foreach($rombel as $r)
+                    @if(Str::contains($r->name_rombel, 'XII'))
+                        <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
+                            {{ $r->name_rombel }}
+                        </a>
+                    @endif
+                @endforeach
             </div>
             <div class="flex justify-center mt-4">
                 <a href="{{ route('dashboard.index') }}" class="bg-gray-300 text-gray-800 text-lg font-medium rounded-lg py-2 px-4 transition-transform duration-300 hover:scale-105">

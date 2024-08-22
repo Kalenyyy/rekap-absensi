@@ -30,30 +30,5 @@ class CameraController extends Controller
     
     
     
-    
-    public function ruangan206()
-    {
-        $latestStudent = Siswa::where('id_rombel', 1)->latest()->first();
-        return view('camera.ruangan206',compact('latestStudent'));
-    }
-    public function ruangan207()
-    {
-        $latestStudent = Siswa::where('id_rombel', 1)->latest()->first();
-        return view('camera.ruangan207',compact('latestStudent'));
-    }
-    public function ruangan320()
-    {
-        $latestStudent = Siswa::where('id_rombel', 1)->latest()->first();
-        return view('camera.ruangan320',compact('latestStudent'));
-    }
-    public function ruangan322()
-    {
-        $latestStudent = Siswa::where('id_rombel', 1)->latest()->first();
-        return view('camera.ruangan322',compact('latestStudent'));
-    }
-    public function ruangan323()
-    {
-        $latestStudent = Siswa::where('id_rombel', 1)->latest()->first();
-        return view('camera.ruangan323',compact('latestStudent'));
-    }
+   
 }
