@@ -20,16 +20,16 @@
         </div>
 
         <!-- Overlay gradasi warna -->
-        <div class="absolute inset-0 bg-gradient-to-b from-green-400 to-green-300 opacity-50 z-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-60 to-blue-50 opacity-50 z-0"></div>
 
         <!-- Konten utama -->
         <div class="relative z-10 flex sm:flex-row justify-center items-center min-h-screen">
             <div class="flex-col flex self-center p-10 sm:max-w-5xl xl:max-w-2xl">
                 <div class="self-start hidden lg:flex flex-col text-white">
                     <img src="" class="mb-3">
-                    <h1 class="mb-3 font-bold text-5xl animate-fade-down animate-once animate-duration-[1800ms] animate-ease-in-out animate-delay-[400ms]">Hi ? Welcome Back </h1>
-                    <p class="pr-3 animate-fade-up animate-once animate-duration-[1000ms] animate-ease-in-out animate-delay-[400ms]">Lorem ipsum is placeholder text commonly used in the graphic, print,
-                        and publishing industries for previewing layouts and visual mockups.</p>
+                    <h1 class="mb-3 font-bold text-5xl animate-fade-down animate-once animate-duration-[1800ms] animate-ease-in-out animate-delay-[400ms]">SELAMAT DATANG KEMBALI!!</h1>
+                    {{-- <p class="pr-3 animate-fade-up animate-once animate-duration-[1000ms] animate-ease-in-out animate-delay-[400ms]">Lorem ipsum is placeholder text commonly used in the graphic, print,
+                        and publishing industries for previewing layouts and visual mockups.</p> --}}
                 </div>
             </div>
             <div class="flex justify-center self-center animate-fade-left animate-once animate-duration-[1500ms] animate-delay-[800ms] animate-ease-in-out animate-alternate">
@@ -45,7 +45,7 @@
                                 <label class="text-sm font-medium text-gray-700 tracking-wide"
                                     for="email">Email</label>
                                 <input
-                                    class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-400"
+                                    class="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                                     id="email" type="email" name="email" value="{{ old('email') }}" required
                                     placeholder="mail@gmail.com">
                             </div>
@@ -54,13 +54,13 @@
                                     Password
                                 </label>
                                 <input
-                                    class="w-full content-center text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-400"
+                                    class="w-full content-center text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                                     type="password" id="password" name="password" value="{{ old('password') }}"
                                     required placeholder="Enter your password">
                             </div>
                             <div>
                                 <button type="submit"
-                                    class="w-full flex justify-center bg-green-400 hover:bg-green-500 text-gray-100 p-3 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">
+                                    class="w-full flex justify-center bg-blue-400 hover:bg-blue-500 text-gray-100 p-3 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500">
                                     Sign in
                                 </button>
                             </div>
@@ -70,7 +70,7 @@
                         <span>
                             Copyright © 2021-2022
                             <a href="https://codepen.io/uidesignhub" rel="" target="_blank" title="Ajimon"
-                                class="text-green hover:text-green-500"></a></span>
+                                class="text-blue hover:text-blue-500"></a></span>
                     </div>
                 </div>
             </div>

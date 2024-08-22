@@ -193,7 +193,7 @@
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div
                 class="flex items-center flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
-                <form id="search-form" action="{{ route('admin.data-master.index-rayon') }}" method="GET"
+                <form id="search-form" action="{{ route('admin.data-master.index-rombel') }}" method="GET"
                     class="mr-2">
                     <label for="table-search" class="sr-only">Search</label>
                     <div class="relative flex mx-3">
@@ -352,43 +352,4 @@
         });
     </script>
 
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('table-search-users');
-            const resultsContainer = document.getElementById('rombel-results');
-
-            searchInput.addEventListener('input', function() {
-                const query = this.value;
-
-                if (query.length >= 1) { // Start searching after 3 characters
-                    $.ajax({
-                        url: '{{ route('admin.data-master.index-rombel') }}',
-                        method: 'GET',
-                        data: {
-                            search_rombel: query
-                        },
-                        success: function(response) {
-                            resultsContainer.innerHTML = response;
-                        },
-                        error: function(error) {
-                            console.log(error);
-                        }
-                    });
-                } else {
-                    // When input is empty, load all data
-                    $.ajax({
-                        url: '{{ route('admin.data-master.index-rombel') }}',
-                        method: 'GET',
-                        success: function(response) {
-                            resultsContainer.innerHTML = response;
-                        },
-                        error: function(error) {
-                            console.log(error);
-                        }
-                    });
-                }
-            });
-        });
-    </script>
 @endsection

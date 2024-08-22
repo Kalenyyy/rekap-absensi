@@ -72,14 +72,14 @@
         </div>
     </div>
     <aside
-        class="w-60 -translate-x-48 fixed transition transform ease-in-out duration-1000 z-50 flex h-screen bg-[#1E293B] ">
+        class="w-60 -translate-x-48 fixed transition transform ease-in-out duration-1000 z-50 flex h-screen bg-[#667BC6] ">
         <!-- open sidebar button -->
         <div
-            class="max-toolbar translate-x-24 scale-x-0 w-full -right-6 transition transform ease-in duration-300 flex items-center justify-between border-4 border-white dark:border-[#0F172A] bg-[#1E293B]  absolute top-2 rounded-full h-12">
+            class="max-toolbar translate-x-24 scale-x-0 w-full -right-6 transition transform ease-in duration-300 flex items-center justify-between border-4 border-white dark:border-[#0F172A] bg-[#667BC6]  absolute top-2 rounded-full h-12">
 
             <div class="flex pl-4 items-center space-x-2 ">
                 <div>
-                    <div onclick="setDark('dark')"
+                    {{-- <div onclick="setDark('dark')"
                         class="moon text-white hover:text-blue-500 dark:hover:text-[#38BDF8]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3}
                             stroke="currentColor" class="w-4 h-4">
@@ -94,7 +94,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
                         </svg>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class ="text-white hover:text-blue-500 dark:hover:text-[#38BDF8]">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3}
@@ -105,14 +105,14 @@
                 </div>
             </div>
             <div
-                class ="flex items-center space-x-3 group bg-gradient-to-r dark:from-cyan-500 dark:to-blue-500 from-indigo-500 via-purple-500 to-purple-500  pl-10 pr-2 py-1 rounded-full text-white  ">
+                class ="flex items-center space-x-3 group bg-gradient-to-r dark:from-cyan-500 dark:to-blue-500 from-indigo-500 via-white-500 to-white-500  pl-10 pr-2 py-1 rounded-full text-white  ">
                 <div class= "transform ease-in-out duration-300 mr-12">
                     Wikrama
                 </div>
             </div>
         </div>
         <div onclick="openNav()"
-            class="-right-6 transition transform ease-in-out duration-500 flex border-4 border-white dark:border-[#0F172A] bg-[#1E293B] dark:hover:bg-blue-500 hover:bg-purple-500 absolute top-2 p-3 rounded-full text-white hover:rotate-45">
+            class="-right-6 transition transform ease-in-out duration-500 flex border-4 border-white dark:border-[#0F172A] bg-[#667BC6] dark:hover:bg-blue-500 hover:bg-white-500 absolute top-2 p-3 rounded-full text-white hover:rotate-45">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3}
                 stroke="currentColor" class="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round"
@@ -121,9 +121,9 @@
         </div>
         <!-- MAX SIDEBAR-->
         <div class="max hidden text-white mt-20 flex-col space-y-2 w-full h-[calc(100vh)]">
-            <a href="{{ route('dashboard') }}">
+            <a href="{{ route('dashboard.index') }}">
                 <div
-                    class="hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                    class="hover:ml-4 w-full text-white hover:text-white-500 dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                         stroke="currentColor" class="w-4 h-4">
                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -135,7 +135,7 @@
                 </div>
             </a>
             <div
-                class="hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                class="hover:ml-4 w-full text-white hover:text-white-500 dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -146,7 +146,7 @@
                 </div>
             </div>
             <div
-                class="hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                class="hover:ml-4 w-full text-white hover:text-white-500 dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
@@ -158,27 +158,24 @@
             </div>
             <a href="{{ route('admin.user.index') }}">
                 <div
-                    class="hover:ml-4 w-full text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
-                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
+                    class="hover:ml-4 w-full text-white dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M18.5 19.5L20 21M11 21H5.6C5.03995 21 4.75992 21 4.54601 20.891C4.35785 20.7951 4.20487 20.6422 4.10899 20.454C4 20.2401 4 19.9601 4 19.4V17.6841C4 17.0485 4 16.7306 4.04798 16.4656C4.27087 15.2344 5.23442 14.2709 6.46558 14.048C6.5425 14.0341 6.6237 14.0242 6.71575 14.0172C6.94079 14 7.05331 13.9914 7.20361 14.0026C7.35983 14.0143 7.4472 14.0297 7.59797 14.0722C7.74302 14.1131 8.00429 14.2315 8.52682 14.4682C9.13692 14.7446 9.8015 14.9218 10.5 14.9795M19 17.5C19 18.8807 17.8807 20 16.5 20C15.1193 20 14 18.8807 14 17.5C14 16.1193 15.1193 15 16.5 15C17.8807 15 19 16.1193 19 17.5ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
                             stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         </path>
-                        </g>
                     </svg>
                     <div>
                         User
                     </div>
                 </div>
             </a>
-
-            <li class="list-none hover:ml-4 py-2 rounded-full transform ease-in-out duration-300 space-x-3 mt-3">
+        
+            <li class="list-none py-2 rounded-full transform ease-in-out duration-300 space-x-3 mt-3 dark:hover:text-blue-500 bg-[#667BC6] hover:ml-4">
                 <button type="button"
-                    class="flex items-center w-full px-8 space-x-3 text-base font-normal text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] transition duration-75 rounded-lg group dark:text-white dark:hover:bg-gray-700"
+                    class="flex items-center w-full px-8 space-x-3 text-base font-normal text-white  dark:hover:text-blue-500 bg-[#1E293B] transition duration-75 rounded-lg group dark:text-white dark:hover:bg-gray-700"
                     aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
+                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 18V6" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
                         <path d="M20 12L20 18" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
                         <path
@@ -188,9 +185,9 @@
                             stroke-width="1.5" stroke-linecap="round"></path>
                         <path d="M20 18C20 20.2091 16.4183 22 12 22C7.58172 22 4 20.2091 4 18" stroke="#ffffff"
                             stroke-width="1.5"></path>
-                    </svg> <span class="flex-1 ml-5 text-left whitespace-nowrap" sidebar-toggle-item>Data
-                        Master</span>
-                    <svg sidebar-toggle-item class="w-4 h-4 ml-4" fill="currentColor" viewBox="0 0 20 20"
+                    </svg>
+                    <span class="flex-1 ml-5 text-left whitespace-nowrap" sidebar-toggle-item>Data Master</span>
+                    <svg sidebar-toggle-item class="w-4 h-4 ml-4 hover:ml-8" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -198,23 +195,48 @@
                     </svg>
                 </button>
                 <ul id="dropdown-example" class="hidden py-2 space-y-2 list-none">
-                    <li>
-                        <a href="{{ route('admin.data-master.index-rayon') }}"
-                            class="flex items-center w-full p-2 text-base font-normal text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] pl-11">Rayon</a>
+                    <li class="">
+                        <a href="{{ route('admin.data-master.index-rayon') }}">
+                            <div
+                                class="hover:ml-4 w-full text-white dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M18.5 19.5L20 21M11 21H5.6C5.03995 21 4.75992 21 4.54601 20.891C4.35785 20.7951 4.20487 20.6422 4.10899 20.454C4 20.2401 4 19.9601 4 19.4V17.6841C4 17.0485 4 16.7306 4.04798 16.4656C4.27087 15.2344 5.23442 14.2709 6.46558 14.048C6.5425 14.0341 6.6237 14.0242 6.71575 14.0172C6.94079 14 7.05331 13.9914 7.20361 14.0026C7.35983 14.0143 7.4472 14.0297 7.59797 14.0722C7.74302 14.1131 8.00429 14.2315 8.52682 14.4682C9.13692 14.7446 9.8015 14.9218 10.5 14.9795M19 17.5C19 18.8807 17.8807 20 16.5 20C15.1193 20 14 18.8807 14 17.5C14 16.1193 15.1193 15 16.5 15C17.8807 15 19 16.1193 19 17.5ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+                                        stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    </path>
+                                </svg>
+                                <div>
+                                    Rayon
+                                </div>
+                            </div>
+                        </a>
                     </li>
-
-                    <li>
-                        <a href="{{ route('admin.data-master.index-rombel') }}"
-                            class="flex items-center w-full p-2 text-base font-normal text-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] pl-11">
-                            Rombel</a>
+                    <li class="">
+                        <a href="{{ route('admin.data-master.index-rombel') }}">
+                            <div
+                                class="hover:ml-4 w-full text-white dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M18.5 19.5L20 21M11 21H5.6C5.03995 21 4.75992 21 4.54601 20.891C4.35785 20.7951 4.20487 20.6422 4.10899 20.454C4 20.2401 4 19.9601 4 19.4V17.6841C4 17.0485 4 16.7306 4.04798 16.4656C4.27087 15.2344 5.23442 14.2709 6.46558 14.048C6.5425 14.0341 6.6237 14.0242 6.71575 14.0172C6.94079 14 7.05331 13.9914 7.20361 14.0026C7.35983 14.0143 7.4472 14.0297 7.59797 14.0722C7.74302 14.1131 8.00429 14.2315 8.52682 14.4682C9.13692 14.7446 9.8015 14.9218 10.5 14.9795M19 17.5C19 18.8807 17.8807 20 16.5 20C15.1193 20 14 18.8807 14 17.5C14 16.1193 15.1193 15 16.5 15C17.8807 15 19 16.1193 19 17.5ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+                                        stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    </path>
+                                </svg>
+                                <div>
+                                    Rombel
+                                </div>
+                            </div>
+                        </a>
                     </li>
+    
                 </ul>
             </li>
+        
         </div>
+        
         <!-- MINI SIDEBAR-->
         <div class="mini mt-20 flex flex-col space-y-2 w-full h-[calc(100vh)]">
             <div
-                class="hover:ml-4 justify-end pr-5 text-white hover:text-purple-500 dark:hover:text-blue-500 w-full bg-[#1E293B] p-3 rounded-full transform ease-in-out duration-300 flex">
+                class="hover:ml-4 justify-end pr-5 text-white hover:text-white-500 dark:hover:text-blue-500 w-full bg-[#667BC6] p-3 rounded-full transform ease-in-out duration-300 flex">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                     stroke="currentColor" class="w-4 h-4">
                     <path strokeLinecap="round" strokeLinejoin="round"
@@ -222,7 +244,7 @@
                 </svg>
             </div>
             <div
-                class="hover:ml-4 justify-end pr-5 text-white hover:text-purple-500 dark:hover:text-blue-500 w-full bg-[#1E293B] p-3 rounded-full transform ease-in-out duration-300 flex">
+                class="hover:ml-4 justify-end pr-5 text-white hover:text-white-500 dark:hover:text-blue-500 w-full bg-[#667BC6] p-3 rounded-full transform ease-in-out duration-300 flex">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -230,7 +252,7 @@
                 </svg>
             </div>
             <div
-                class="hover:ml-4 justify-end pr-5 text-white hover:text-purple-500 dark:hover:text-blue-500 w-full bg-[#1E293B] p-3 rounded-full transform ease-in-out duration-300 flex">
+                class="hover:ml-4 justify-end pr-5 text-white hover:text-white-500 dark:hover:text-blue-500 w-full bg-[#667BC6] p-3 rounded-full transform ease-in-out duration-300 flex">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
@@ -241,10 +263,10 @@
     </aside>
     <!-- CONTENT -->
     <div class ="content ml-12 transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4">
-        <nav class="flex px-5 py-3 text-gray-700  rounded-lg bg-gray-50 dark:bg-[#1E293B] " aria-label="Breadcrumb">
+        <nav class="flex px-5 py-3 text-gray-700  rounded-lg bg-gray-50 dark:bg-[#667BC6] " aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
                 <li class="inline-flex items-center">
-                    <a href="{{ route('dashboard') }}"
+                    <a href="{{ route('dashboard.index') }}"
                         class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                         <svg class = "w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">

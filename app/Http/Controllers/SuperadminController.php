@@ -22,38 +22,38 @@ class SuperadminController extends Controller
     public function indexRayon(Request $request)
     {
         $search = $request->input('search_rayon');
+
         $rayons = Rayon::query();
-    
+
         if ($search) {
-            $rayons = $rayons->where('name_rayon', 'like', "%{$search}%");
+            $search = strtolower($search);
+            $rayons = $rayons->whereRaw('LOWER(name_rombel) LIKE ?', ["%{$search}%"]);
         }
-    
-        $rayons = $rayons->get();
-    
-        if ($request->ajax()) {
-            return view('admin.partials.rayon-results', compact('rayons'))->render();
-        }
-    
+
+        $rayons = $rayons->orderBy('name_rayon')->get();
+
+        // Kembalikan view dengan data rayon
         return view('admin.data_master.rayon', compact('rayons'));
     }
+
+
 
     public function indexRombel(Request $request)
     {
         $search = $request->input('search_rombel');
+
         $rombels = rombel::query();
-    
+
         if ($search) {
-            $rayons = $rombels->where('name_rombel', 'like', "%{$search}%");
+            $search = strtolower($search);
+            $rombels = $rombels->whereRaw('LOWER(name_rombel) LIKE ?', ["%{$search}%"]);
         }
-    
-        $rombels = $rombels->get();
-    
-        if ($request->ajax()) {
-            return view('admin.partials.rombel-results', compact('rombels'))->render();
-        }
-    
+
+        $rombels = $rombels->orderBy('name_rombel')->get();
+
         return view('admin.data_master.rombel', compact('rombels'));
     }
+
 
     public function storeRayon(Request $request)
     {
@@ -152,5 +152,4 @@ class SuperadminController extends Controller
             'rombel' => $rombel
         ]);
     }
-
 }

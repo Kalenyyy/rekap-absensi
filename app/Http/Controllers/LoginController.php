@@ -30,15 +30,16 @@ class LoginController extends Controller
             $user = $request->only(['email','password']);
     
             if (Auth::attempt($user)) {
-                return redirect()->route('dashboard')->with('Success', 'Selamat Datang ' . Auth::user()->username);
-            }else{
-                return redirect()->back()->with('failed', 'username dan Password tidak sesuai. silahkan coba lagi');
+                return redirect()->route('dashboard.index')->with('Success', 'Selamat Datang ' . Auth::user()->username);
+            } else {
+                return redirect()->back()->with('failed', 'Username dan Password tidak sesuai. Silahkan coba lagi');
             }
+            
     }
 
     public function dashboard()
     {
-        return view('layouts.template_fix');
+        return view('admin.dashboard.index');
     }
 
     /**
