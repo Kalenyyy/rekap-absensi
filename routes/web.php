@@ -34,11 +34,18 @@ Route::middleware('IsLogin')->group(function () {
         });
 
         Route::prefix('data-master')->name('admin.data-master.')->group(function() {
-            Route::get('/', [SuperadminController::class, 'indexDataMaster'])->name('index');
-            Route::post('/store', [SuperadminController::class, 'storeRayon'])->name('store');
+            Route::get('/rayon', [SuperadminController::class, 'indexRayon'])->name('index-rayon');
+            Route::post('/store-rayon', [SuperadminController::class, 'storeRayon'])->name('store-rayon');
             Route::get('/edit-rayon/{id}', [SuperadminController::class, 'getDataRayon']);
             Route::patch('/update-rayon/{id}', [SuperadminController::class, 'updateDataRayon']);
             Route::delete('/delete-rayon/{id}', [SuperadminController::class, 'deleteDataRayon']);
+
+            Route::get('/rombel', [SuperadminController::class, 'indexRombel'])->name('index-rombel');
+            Route::post('/store-rombel', [SuperadminController::class, 'storeDataRombel'])->name('store-rombel');
+            Route::get('/edit-rombel/{id}', [SuperadminController::class, 'getDataRombel']);
+            Route::patch('/update-rombel/{id}', [SuperadminController::class, 'updateDataRombel']);
+
+
         });
     });
 

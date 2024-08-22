@@ -19,19 +19,40 @@ class SuperadminController extends Controller
         return view('admin.users.index');
     }
 
-    public function indexDataMaster(Request $request)
+    public function indexRayon(Request $request)
     {
         $search = $request->input('search_rayon');
+        $rayons = Rayon::query();
+    
+        if ($search) {
+            $rayons = $rayons->where('name_rayon', 'like', "%{$search}%");
+        }
+    
+        $rayons = $rayons->get();
+    
+        if ($request->ajax()) {
+            return view('admin.partials.rayon-results', compact('rayons'))->render();
+        }
+    
+        return view('admin.data_master.rayon', compact('rayons'));
+    }
 
-        $rayons = Rayon::query()
-            ->when($search, function ($query, $search) {
-                return $query->where('name_rayon', 'like', '%' . $search . '%');
-            })
-            ->get();
-
-        $rombels = rombel::all();
-
-        return view('admin.data_master.index', compact('rayons', 'rombels'));
+    public function indexRombel(Request $request)
+    {
+        $search = $request->input('search_rombel');
+        $rombels = rombel::query();
+    
+        if ($search) {
+            $rayons = $rombels->where('name_rombel', 'like', "%{$search}%");
+        }
+    
+        $rombels = $rombels->get();
+    
+        if ($request->ajax()) {
+            return view('admin.partials.rombel-results', compact('rombels'))->render();
+        }
+    
+        return view('admin.data_master.rombel', compact('rombels'));
     }
 
     public function storeRayon(Request $request)
@@ -45,12 +66,11 @@ class SuperadminController extends Controller
         ];
         rayon::create($rayonStore);
 
-        return redirect()->back()->with('success', 'Data Rayon Sudah Ditambah');
+        return redirect()->back()->with('successRayon', 'Data Rayon Sudah Ditambah');
     }
 
     public function getDataRayon($id)
     {
-
         $rayon = rayon::where('id', $id)->first();
         return response()->json([
             'rayon' => $rayon
@@ -70,7 +90,7 @@ class SuperadminController extends Controller
         ]);
 
         // Set session dengan pesan sukses
-        session()->flash('success', 'Data rayon berhasil diperbarui');
+        session()->flash('successRayon', 'Data rayon berhasil diperbarui');
 
         return response()->json([
             'message' => 'Data rayon berhasil diperbarui',
@@ -83,10 +103,54 @@ class SuperadminController extends Controller
         $rayon = Rayon::findOrFail($id);
         $rayon->delete();
 
-        session()->flash('success', 'Data rayon berhasil dihapus');
+        session()->flash('successRayon', 'Data rayon berhasil dihapus');
 
         return response()->json([
             'message' => 'Rayon berhasil dihapus!'
         ]);
     }
+
+    public function storeDataRombel(Request $request)
+    {
+        $request->validate([
+            'name_rombel' => 'required'
+        ]);
+
+        $rombelStore = [
+            'name_rombel' => $request->input('name_rombel'),
+        ];
+        rombel::create($rombelStore);
+
+        return redirect()->back()->with('successRombel', 'Data ROmbel Sudah Ditambah');
+    }
+
+    public function getDataRombel($id)
+    {
+        $rombel = rombel::where('id', $id)->first();
+        return response()->json([
+            'rombel' => $rombel
+        ]);
+    }
+
+    public function updateDataRombel(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'name_rombel' => 'required|string|max:255',
+        ]);
+
+        $rombel = rombel::findOrFail($id);
+
+        $rombel->update([
+            'name_rombel' => $request->input('name_rombel'),
+        ]);
+
+        // Set session dengan pesan sukses
+        session()->flash('successRombel', 'Data Rombel berhasil diperbarui');
+
+        return response()->json([
+            'message' => 'Data Rombel berhasil diperbarui',
+            'rombel' => $rombel
+        ]);
+    }
+
 }
