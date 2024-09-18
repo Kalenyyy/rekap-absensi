@@ -17,7 +17,7 @@ class CreateGuruKejuruansTable extends Migration
             $table->id('id_guru'); // Primary key
             $table->string('nama'); // Column for nama
             $table->unsignedBigInteger('id_user'); // Foreign key referencing user
-            $table->timestamps(); // Created at and updated at timestamps
+            $table->timestamps(); 
 
             // Define foreign key constraint
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');

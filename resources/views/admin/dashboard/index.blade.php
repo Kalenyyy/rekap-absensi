@@ -1,7 +1,7 @@
 @extends('layouts.template_fix')
 
 @section('top_content')
-    <li>
+    {{-- <li>
         <div class="flex items-center">
             <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
@@ -13,7 +13,7 @@
                 Users
             </a>
         </div>
-    </li>
+    </li> --}}
 @endsection
 
 @section('modal')

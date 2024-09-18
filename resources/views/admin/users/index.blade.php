@@ -111,6 +111,74 @@
             </form>
         </div>
     </div>
+
+
+
+
+    {{-- Modal Create Guru PS --}}
+    <div id="guru-ps-modal" tabindex="-1" data-modal-backdrop="static"
+     aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Create New Guru PS
+                    </h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-toggle="guru-ps-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form class="p-4 md:p-5" action="{{ route('admin.user.store.guru-ps') }}" method="POST">
+                    @csrf
+                    <div class="grid gap-4 mb-4">
+                        <div class="col-span-full">
+                            <label for="name"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                            <input type="text" name="name" id="name"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="Type name user" required="">
+                        </div>
+                        <div class="col-span-full sm:col-span-1">
+                            <label for="email"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                            <input type="email" name="email" id="email"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="test@gmail.com" required="">
+                        </div>
+                        <div class="col-span-full sm:col-span-1">
+                            <label for="rayon"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rayon</label>
+                            <select id="rayon" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="rayon">
+                                @foreach ($rayons as $rayon)
+                                    <option hidden selected>Pilih Rayon</option>
+                                    <option value="{{ $rayon['id'] }}">{{ $rayon['name_rayon'] }}</option>
+                                @endforeach                                
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        Add new user
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('content')
@@ -119,23 +187,23 @@
             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab"
                 data-tabs-toggle="#default-tab-content" role="tablist">
                 <li class="me-2" role="presentation">
-                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="CFIT-1-tab" data-tabs-target="#CFIT-1"
-                        type="button" role="tab" aria-controls="CFIT-1" aria-selected="false">Guru PS</button>
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="guru-ps-tab" data-tabs-target="#guru-ps"
+                        type="button" role="tab" aria-controls="guru-ps" aria-selected="false">Guru PS</button>
                 </li>
                 <li class="me-2" role="presentation">
                     <button
                         class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                        id="CFIT-2-tab" data-tabs-target="#CFIT-2" type="button" role="tab" aria-controls="CFIT-2"
-                        aria-selected="false">Guru Rayon</button>
+                        id="guru-rayon-tab" data-tabs-target="#guru-rayon" type="button" role="tab"
+                        aria-controls="guru-rayon" aria-selected="false">Guru Rayon</button>
                 </li>
             </ul>
         </div>
 
         <div id="default-tab-content">
-            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800 w-full" id="CFIT-1" role="tabpanel"
-                aria-labelledby="CFIT-1-tab">
-                <div class="relative overflow-x-auto shadow-sm sm:rounded-lg w-full">
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800 w-full" id="guru-ps" role="tabpanel"
+                aria-labelledby="guru-ps-tab">
 
+                <div class="relative overflow-x-auto shadow-sm sm:rounded-lg w-full">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div
                             class="flex items-center flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
@@ -164,8 +232,11 @@
                                     </button>
                                 </div>
                             </form>
-                            <button type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 mx-5">Tambah Data Guru PS <i class="fa-solid fa-arrow-right fa-xl" style="color: #ffffff;"></i></button>
-                        </div> 
+                            <button type="button" data-modal-target="guru-ps-modal" data-modal-toggle="guru-ps-modal"
+                                class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 mx-5">Tambah
+                                Data Guru PS <i class="fa-solid fa-arrow-right fa-xl"
+                                    style="color: #ffffff;"></i></button>
+                        </div>
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
@@ -222,8 +293,8 @@
                 </div>
             </div>
 
-            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800 w-full" id="CFIT-2" role="tabpanel"
-                aria-labelledby="CFIT-2-tab">
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800 w-full" id="guru-rayon" role="tabpanel"
+                aria-labelledby="guru-rayon-tab">
                 <div class="relative overflow-x-auto shadow-sm sm:rounded-lg w-full">
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

@@ -14,12 +14,13 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id('id_user'); // Mengganti id default dengan id_user
-            $table->string('username'); // Mengganti name dengan username dan menambahkan unique
-            $table->string('email')->unique(); // Mengganti name dengan username dan menambahkan unique
+            $table->id('id_user'); 
+            $table->string('username'); 
+            $table->string('email')->unique(); 
             $table->string('password');
-            $table->enum('role', ['guru_ps', 'guru_kejuruan', 'admin']); // Menambahkan role
-            $table->timestamps(); // Menambahkan created_at dan updated_at secara otomatis
+            $table->enum('role', ['guru_ps', 'guru_kejuruan', 'admin']); 
+            $table->enum('status', ['online', 'offline']); 
+            $table->timestamps(); 
         });
     }
 

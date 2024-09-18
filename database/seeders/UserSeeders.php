@@ -20,16 +20,8 @@ class UserSeeders extends Seeder
             'username' => "admin",
             'role' => 'admin',
             "password" => Hash::make("admin"),
+            "status" => 'online',
             //cara lain ekpripsi : bcyrpt
-
-
-        ]);
-        User::create([
-            'id_user' => "2",
-            'email' => "guru_kejuruan@gmail.com",
-            'username' => "Angger Kalehandya S.Kom",
-            'role' => 'guru_kejuruan',
-            "password" => Hash::make("guru_kejuruan"),
 
 
         ]);

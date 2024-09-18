@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class siswa extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'rombel',
+        'rayon',
+        'nis'
+    ];
 }

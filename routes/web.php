@@ -44,7 +44,15 @@ Route::middleware('IsLogin')->group(function () {
 
     Route::middleware("IsAdmin")->group(function () {
         Route::prefix('users')->name('admin.user.')->group(function () {
-            Route::get('/', [SuperadminController::class, 'index'])->name('index');
+            Route::get('/', [SuperadminController::class, 'indexUser'])->name('index');
+            Route::post('/store-guru-ps', [SuperadminController::class, 'storeGuruPS'])->name('store.guru-ps');
+        });
+
+        Route::prefix('register-siswa')->name('admin.register.')->group(function () {
+            Route::get('/', [SuperadminController::class, 'indexRegister'])->name('index');
+            Route::get('/siswa/{id}', [SuperadminController::class, 'RegisterSiswa'])->name('RegisterSiswa');
+            Route::post('/import-siswa', [SuperadminController::class, 'importSiswa'])->name('import');
+            Route::post('/register-siswa',[SuperadminController::class, 'registerFace'])->name('register-face');
         });
 
         Route::prefix('data-master')->name('admin.data-master.')->group(function () {

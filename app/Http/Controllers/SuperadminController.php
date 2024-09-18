@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\rayon;
+use App\Models\siswa;
 use App\Models\rombel;
+use App\Models\guru_ps;
 use App\Models\superadmin;
+use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SuperadminController extends Controller
 {
@@ -14,9 +21,10 @@ class SuperadminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexUser()
     {
-        return view('admin.users.index');
+        $rayons = rayon::all();
+        return view('admin.users.index', compact('rayons'));
     }
 
     public function indexRayon(Request $request)
@@ -35,8 +43,6 @@ class SuperadminController extends Controller
         // Kembalikan view dengan data rayon
         return view('admin.data_master.rayon', compact('rayons'));
     }
-
-
 
     public function indexRombel(Request $request)
     {
@@ -151,5 +157,98 @@ class SuperadminController extends Controller
             'message' => 'Data Rombel berhasil diperbarui',
             'rombel' => $rombel
         ]);
+    }
+
+
+    public function storeGuruPS(Request $request)
+    {
+        $request->validate([
+            'name' => [
+                'required',
+                'regex:/^[\pL\s]+$/u',
+                'not_regex:/<[^>]*>/'
+            ],
+            'email' => [
+                'required',
+                'email', 
+                'regex:/^[^\s@]+@[^\s@]+\.[^\s@]+$/',
+                'not_regex:/<[^>]*>/',
+                'unique:users,email'
+            ],
+            'rayon' => [
+                'required',
+            ]
+        ]);
+        
+
+        // Ambil 3 huruf pertama dari username dan email
+        $usernamePart = substr($request->input('name'), 0, 3);
+        $emailPart = substr($request->input('email'), 0, 3);
+
+        // Gabungkan 3 huruf dari username dan email
+        $passwordRaw = $usernamePart . $emailPart;
+
+        // Hash password
+        $hashedPassword = Hash::make($passwordRaw);
+
+        // Buat array untuk menyimpan data user
+        $userStore = [
+            'username' => $request->input('name'),
+            'email' => $request->input('email'),
+            'role' => 'guru_ps',
+            'password' => $hashedPassword,
+            'status' => 'online'
+        ];
+
+        $userCreate = User::create($userStore);
+
+
+        $guru_ps_store = [
+            'nama' => $userCreate->username,
+            'rayon_id' => $request->input('rayon'),
+            'id_user' => $userCreate->id_user,
+        ];
+
+        guru_ps::create($guru_ps_store);
+
+        return redirect()->back()->with('success', 'User dan Guru PS berhasil ditambahkan.');
+    }
+
+    public function indexRegister() {
+    // $response = Http::get('https://be-sidata.smkwikrama.sch.id/student');
+
+    $data_siswas = siswa::all();
+    // dd($data_siswas);
+
+    // Mengirim data ke view
+    return view('admin.register.index', ['data_siswas' => $data_siswas]);
+    }
+
+    public function importSiswa(Request $request) {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv',
+        ]);
+
+        Excel::import(new SiswaImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Data imported successfully');
+    }
+
+    public function RegisterSiswa($id) {
+        $siswa = siswa::where('id', $id)->first();
+        return view('admin.register.register', ['siswa' => $siswa]);
+    }
+
+    public function registerFace(Request $request)
+    {
+        $response = Http::post('http://localhost:5000/register_face', [
+            'name' => $request->input('name'),
+            'nis' => $request->input('nis'),
+            'rayon' => $request->input('rayon'),
+            'rombel' => $request->input('rombel'),
+            'image' => $request->input('image')
+        ]);
+
+        return redirect()->back()->with('status', $response->json('message'));
     }
 }
