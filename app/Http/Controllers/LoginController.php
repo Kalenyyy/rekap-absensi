@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Ruangan;
+use App\Models\absensi;
+use Illuminate\Support\Facades\DB;
+
 
 class LoginController extends Controller
 {
@@ -39,8 +43,19 @@ class LoginController extends Controller
 
     public function dashboard()
     {
-        return view('admin.dashboard.index');
+        // Ambil semua data ruangan
+        $ruangan = Ruangan::all();
+        
+        // Ambil data absensi siswa sesuai tanggal hari ini atau rentang tertentu
+        $siswa = absensi::select(DB::raw('DATE(tanggal) as date'), DB::raw('count(*) as count'))
+                         ->groupBy('date')
+                         ->get();
+    
+        return view('admin.dashboard.index', compact('ruangan', 'siswa'));
     }
+    
+    
+    
 
     /**
      * Show the form for creating a new resource.

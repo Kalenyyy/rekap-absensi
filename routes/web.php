@@ -5,6 +5,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\CameraController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PersentasiController;
+use App\Http\Controllers\RekapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,16 +38,23 @@ Route::middleware('IsLogin')->group(function () {
     // Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
     Route::prefix('dashboard')->name('dashboard.')->group(function() {
         Route::get('/', [LoginController::class, 'dashboard'])->name('index');
-        Route::get('/gen20', [DashboardController::class, 'gen20'])->name('gen20');
-        Route::get('/gen21', [DashboardController::class, 'gen21'])->name('gen21');
-        Route::get('/gen22', [DashboardController::class, 'gen22'])->name('gen22');
-
+        // Route::get('/index', [DashboardController::class, 'index'])->name('index');
+      
     });    
     // Route::get('/logout', [LoginController::class , 'logout'])->name('logout');
 
     Route::middleware("IsAdmin")->group(function () {
         Route::prefix('users')->name('admin.user.')->group(function() {
             Route::get('/', [SuperadminController::class, 'index'])->name('index');
+        });
+
+        Route::prefix('persntasi')->name('admin.persntasi.')->group(function() {
+            Route::get('/', [PersentasiController::class, 'index'])->name('index');
+        });
+
+        Route::prefix('rekap')->name('admin.rekap.')->group(function() {
+            Route::get('/', [RekapController::class, 'index'])->name('index');
+            Route::get('/bulanan', [RekapController::class, 'bulanan'])->name('bulanan');
         });
 
         Route::prefix('data-master')->name('admin.data-master.')->group(function() {

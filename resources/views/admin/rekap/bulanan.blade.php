@@ -24,22 +24,25 @@
         <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-screen-lg h-auto flex flex-col">
 
             <div class="text-center border-b-2 border-[#667BC3] pb-4">
-                <h1 class="text-4xl font-bold text-[#667BC3]">ABSENSI FACE RECOGNITION</h1>
-                <p class="text-xl font-medium text-[#667BC3]">SMK WIKRAMA BOGOR</p>
+                <h1 class="text-4xl font-bold text-[#667BC3]">TOTAL DATA ROMBEL PER RUANGAN LABORATORIUM</h1>
             </div>
-            <div class="text-center mt-6 mb-4">
-                <h2 class="text-2xl font-bold text-[#667BC3]">ROMBEL PPLG</h2>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-                @foreach($rombel as $r)
-                    @if(Str::contains($r->name_rombel, 'XII'))
-                        <a href="" class="bg-[#667BC3] text-white text-3xl font-bold rounded-lg flex items-center justify-center h-40 transform transition-transform duration-300 hover:scale-105">
-                            {{ $r->name_rombel }}
-                        </a>
-                    @endif
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+                @foreach($ruangan as $camera)
+                <div class="bg-[#667BC3] text-white rounded-lg h-40 p-4 flex flex-col justify-between">
+                    <div class="flex justify-between items-center w-full">
+                        <div class="text-5xl font-bold">{{ $camera->nama_ruangan }}</div>
+                    </div>
+                    <div class="flex justify-between items-center w-full mt-4">
+                        <i class="fa-solid fa-chalkboard-teacher text-5xl"></i> 
+                        <div class="text-5xl font-bold">{{$rombels}}</div>
+                    </div>
+                    <div class="text-base text-center mt-1">.... Rombel Tersedia</div>
+                </div>
                 @endforeach
             </div>
-            <div class="flex justify-center mt-4">
+
+            <div class="flex justify-center mt-6">
                 <a href="{{ route('dashboard.index') }}" class="bg-gray-300 text-gray-800 text-lg font-medium rounded-lg py-2 px-4 transition-transform duration-300 hover:scale-105">
                     Back
                 </a>
