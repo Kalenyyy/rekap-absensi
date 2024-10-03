@@ -6,13 +6,15 @@ use App\Models\User;
 use App\Models\rayon;
 use App\Models\siswa;
 use App\Models\rombel;
-use App\Models\guru_ps;
-use App\Models\superadmin;
+use App\Models\absensi;
+use Illuminate\Support\Str;
 use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
+use App\Models\guru_kejuruan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 
 class SuperadminController extends Controller
 {
@@ -23,8 +25,8 @@ class SuperadminController extends Controller
      */
     public function indexUser()
     {
-        $rayons = rayon::all();
-        return view('admin.users.index', compact('rayons'));
+        $users = guru_kejuruan::with('user')->get();
+        return view('admin.users.index', compact('users'));
     }
 
     public function indexRayon(Request $request)
@@ -127,7 +129,7 @@ class SuperadminController extends Controller
         ];
         rombel::create($rombelStore);
 
-        return redirect()->back()->with('successRombel', 'Data ROmbel Sudah Ditambah');
+        return redirect()->back()->with('successRombel', 'Data Rombel Sudah Ditambah');
     }
 
     public function getDataRombel($id)
@@ -160,7 +162,7 @@ class SuperadminController extends Controller
     }
 
 
-    public function storeGuruPS(Request $request)
+    public function storeDataGuru(Request $request)
     {
         $request->validate([
             'name' => [
@@ -170,16 +172,13 @@ class SuperadminController extends Controller
             ],
             'email' => [
                 'required',
-                'email', 
+                'email',
                 'regex:/^[^\s@]+@[^\s@]+\.[^\s@]+$/',
                 'not_regex:/<[^>]*>/',
                 'unique:users,email'
-            ],
-            'rayon' => [
-                'required',
             ]
         ]);
-        
+
 
         // Ambil 3 huruf pertama dari username dan email
         $usernamePart = substr($request->input('name'), 0, 3);
@@ -195,9 +194,9 @@ class SuperadminController extends Controller
         $userStore = [
             'username' => $request->input('name'),
             'email' => $request->input('email'),
-            'role' => 'guru_ps',
+            'role' => $request->input('role'),
             'password' => $hashedPassword,
-            'status' => 'online'
+            'status' => 'Online'
         ];
 
         $userCreate = User::create($userStore);
@@ -205,26 +204,55 @@ class SuperadminController extends Controller
 
         $guru_ps_store = [
             'nama' => $userCreate->username,
-            'rayon_id' => $request->input('rayon'),
             'id_user' => $userCreate->id_user,
         ];
 
-        guru_ps::create($guru_ps_store);
+        guru_kejuruan::create($guru_ps_store);
 
-        return redirect()->back()->with('success', 'User dan Guru PS berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'Data Berhasil Ditambahkan.');
     }
 
-    public function indexRegister() {
-    // $response = Http::get('https://be-sidata.smkwikrama.sch.id/student');
-
-    $data_siswas = siswa::all();
-    // dd($data_siswas);
-
-    // Mengirim data ke view
-    return view('admin.register.index', ['data_siswas' => $data_siswas]);
+    public function getDataGuru($id)
+    {
+        $guru_kejuruan = user::where('id_user', $id)->first();
+        return response()->json([
+            'guru_kejuruan' => $guru_kejuruan
+        ]);
     }
 
-    public function importSiswa(Request $request) {
+    public function indexRegister(Request $request)
+    {
+        // $response = Http::get('https://be-sidata.smkwikrama.sch.id/student');
+
+        $search = $request->input('search');
+        $rombel = $request->input('rombel');
+
+        // Query dasar
+        $query = siswa::query();
+
+        // Jika ada pencarian nama
+        if ($search) {
+            $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($search) . '%']);
+        }
+
+        // Jika ada filter rombel
+        if ($rombel && $rombel !== '') {
+            $query->where('rombel', $rombel);
+        }
+
+        // Mengurutkan data berdasarkan rombel dan kemudian nama
+        $query->orderBy('rombel', 'asc')->orderBy('name', 'asc');
+
+        $data_siswas = $query->paginate(8);
+
+        $rombels = rombel::all();
+        return view('admin.absen.index', ['data_siswas' => $data_siswas, 'rombels' => $rombels]);
+    }
+
+
+
+    public function importSiswa(Request $request)
+    {
         $request->validate([
             'file' => 'required|mimes:xlsx,csv',
         ]);
@@ -234,9 +262,10 @@ class SuperadminController extends Controller
         return redirect()->back()->with('success', 'Data imported successfully');
     }
 
-    public function RegisterSiswa($id) {
+    public function RegisterSiswa($id)
+    {
         $siswa = siswa::where('id', $id)->first();
-        return view('admin.register.register', ['siswa' => $siswa]);
+        return view('admin.absen.register', ['siswa' => $siswa]);
     }
 
     public function registerFace(Request $request)
@@ -249,6 +278,66 @@ class SuperadminController extends Controller
             'image' => $request->input('image')
         ]);
 
-        return redirect()->back()->with('status', $response->json('message'));
+        return redirect()->route('admin.register.index')->with('status', $response->json('message'));
+    }
+
+    public function indexAbsen()
+    {
+        return view('admin.absen.absensi');
+    }
+
+    public function recognizeFace(Request $request)
+    {
+        // Mengirim request ke Flask
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post('http://localhost:5000/recognize_face', [
+            'json' => ['image' => $request->image]
+        ]);
+
+        return response()->json(json_decode($response->getBody(), true));
+    }
+
+    public function absenSiswa(Request $request)
+    {
+
+        // Decode the base64 image
+        $imageData = $request->input('image');
+        $image = base64_decode($imageData);
+
+        // Generate a unique name for the image file
+        $imageName = Str::random(10) . '.jpg';
+
+        // Store the image in the public directory (storage/app/public)
+        Storage::disk('public')->put('absensi/' . $imageName, $image);
+
+        // Cari siswa berdasarkan NIS
+        $siswa = Siswa::where('nis', $request->input('nis'))->first();
+
+        // Jika siswa ditemukan
+        if ($siswa) {
+            // Cek apakah sudah absen hari ini
+            $today = now()->format('Y-m-d');
+            $absenHariIni = Absensi::where('id_siswa', $siswa->id)
+                ->whereDate('tanggal', $today)
+                ->exists();
+
+            // Jika sudah absen hari ini, kembalikan dengan pesan error
+            if ($absenHariIni) {
+                return redirect()->back()->with('error', 'Siswa sudah melakukan absensi hari ini.');
+            }
+
+            // Jika belum absen, buat data absensi
+            absensi::create([
+                'name' => $request->input('name'),
+                'id_siswa' => $siswa->id,
+                'tanggal' => now(),
+                'status' => 'Hadir',
+                'foto_siswa' => $imageName, // Simpan nama file gambar
+            ]);
+
+            return redirect()->back()->with('success', 'Absensi berhasil disimpan.');
+        } else {
+            return redirect()->back()->with('error', 'Siswa dengan NIS tersebut tidak ditemukan.');
+        }
     }
 }

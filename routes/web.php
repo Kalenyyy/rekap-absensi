@@ -5,6 +5,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\CameraController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PersentasiController;
+use App\Http\Controllers\RekapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,23 +38,26 @@ Route::middleware('IsLogin')->group(function () {
     // Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [LoginController::class, 'dashboard'])->name('index');
-        Route::get('/gen20', [DashboardController::class, 'gen20'])->name('gen20');
-        Route::get('/gen21', [DashboardController::class, 'gen21'])->name('gen21');
-        Route::get('/gen22', [DashboardController::class, 'gen22'])->name('gen22');
     });
-    // Route::get('/logout', [LoginController::class , 'logout'])->name('logout');
 
     Route::middleware("IsAdmin")->group(function () {
         Route::prefix('users')->name('admin.user.')->group(function () {
             Route::get('/', [SuperadminController::class, 'indexUser'])->name('index');
-            Route::post('/store-guru-ps', [SuperadminController::class, 'storeGuruPS'])->name('store.guru-ps');
+            Route::post('/store-guru', [SuperadminController::class, 'storeDataGuru'])->name('store-guru');
+            Route::get('/edit-guru/{id}', [SuperadminController::class, 'getDataGuru']);
         });
 
         Route::prefix('register-siswa')->name('admin.register.')->group(function () {
             Route::get('/', [SuperadminController::class, 'indexRegister'])->name('index');
             Route::get('/siswa/{id}', [SuperadminController::class, 'RegisterSiswa'])->name('RegisterSiswa');
             Route::post('/import-siswa', [SuperadminController::class, 'importSiswa'])->name('import');
-            Route::post('/register-siswa',[SuperadminController::class, 'registerFace'])->name('register-face');
+            Route::post('/register-siswa', [SuperadminController::class, 'registerFace'])->name('register-face');
+        });
+
+        Route::prefix('absen-siswa')->name('admin.absen.')->group(function () {
+            Route::get('/', [SuperadminController::class, 'indexAbsen'])->name('index');
+            Route::post('/recognize-face', [SuperadminController::class, 'recognizeFace'])->name('recognizeFace');
+            Route::post('/absen-siswa', [SuperadminController::class, 'absenSiswa'])->name('absenSiswa');
         });
 
         Route::prefix('data-master')->name('admin.data-master.')->group(function () {
@@ -67,7 +72,14 @@ Route::middleware('IsLogin')->group(function () {
             Route::get('/edit-rombel/{id}', [SuperadminController::class, 'getDataRombel']);
             Route::patch('/update-rombel/{id}', [SuperadminController::class, 'updateDataRombel']);
         });
-    });
 
-    Route::middleware(['IsGuru'])->group(function () {});
+        Route::prefix('persntasi')->name('admin.persntasi.')->group(function () {
+            Route::get('/', [PersentasiController::class, 'index'])->name('index');
+        });
+
+        Route::prefix('rekap')->name('admin.rekap.')->group(function () {
+            Route::get('/', [RekapController::class, 'index'])->name('index');
+            Route::get('/bulanan', [RekapController::class, 'bulanan'])->name('bulanan');
+        });
+    });
 });

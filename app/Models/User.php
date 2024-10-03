@@ -44,4 +44,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     protected $primaryKey = 'id_user'; 
+
+    public function guruKejuruan()
+    {
+        return $this->hasMany(guru_kejuruan::class, 'id_user');
+    }
 }

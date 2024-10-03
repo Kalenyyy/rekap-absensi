@@ -5,15 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Rekap Absensi Siswa</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/1464b01d02.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
 </head>
 
 @yield('modal')
@@ -137,17 +141,66 @@
                     </div>
                 </div>
             </a>
-            <div
-                class="hover:ml-4 w-full text-white hover:text-white-500 dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-4 h-4">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
-                </svg>
-                <div>
-                    History
-                </div>
-            </div>
+            <li class="list-none py-2 rounded-full transform ease-in-out duration-300 space-x-3 mt-3 dark:hover:text-blue-500 bg-[#667BC6] hover:ml-4">
+                <button type="button"
+                    class="flex items-center w-full px-8 space-x-3 text-base font-normal text-white  dark:hover:text-blue-500 bg-[#1E293B] transition duration-75 rounded-lg group dark:text-white dark:hover:bg-gray-700"
+                    aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 18V6" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
+                        <path d="M20 12L20 18" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
+                        <path
+                            d="M12 10C16.4183 10 20 8.20914 20 6C20 3.79086 16.4183 2 12 2C7.58172 2 4 3.79086 4 6C4 8.20914 7.58172 10 12 10Z"
+                            stroke="#ffffff" stroke-width="1.5"></path>
+                        <path d="M20 12C20 14.2091 16.4183 16 12 16C7.58172 16 4 14.2091 4 12" stroke="#ffffff"
+                            stroke-width="1.5" stroke-linecap="round"></path>
+                        <path d="M20 18C20 20.2091 16.4183 22 12 22C7.58172 22 4 20.2091 4 18" stroke="#ffffff"
+                            stroke-width="1.5"></path>
+                    </svg>
+                    <span class="flex-1 ml-5 text-left whitespace-nowrap" sidebar-toggle-item>rekap</span>
+                    <svg sidebar-toggle-item class="w-4 h-4 ml-4 hover:ml-8" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+                <ul id="dropdown-example" class="hidden py-2 space-y-2 list-none">
+                    <li class="">
+                        <a href="{{ route('admin.rekap.index') }}">
+                            <div
+                                class="hover:ml-4 w-full text-white dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M18.5 19.5L20 21M11 21H5.6C5.03995 21 4.75992 21 4.54601 20.891C4.35785 20.7951 4.20487 20.6422 4.10899 20.454C4 20.2401 4 19.9601 4 19.4V17.6841C4 17.0485 4 16.7306 4.04798 16.4656C4.27087 15.2344 5.23442 14.2709 6.46558 14.048C6.5425 14.0341 6.6237 14.0242 6.71575 14.0172C6.94079 14 7.05331 13.9914 7.20361 14.0026C7.35983 14.0143 7.4472 14.0297 7.59797 14.0722C7.74302 14.1131 8.00429 14.2315 8.52682 14.4682C9.13692 14.7446 9.8015 14.9218 10.5 14.9795M19 17.5C19 18.8807 17.8807 20 16.5 20C15.1193 20 14 18.8807 14 17.5C14 16.1193 15.1193 15 16.5 15C17.8807 15 19 16.1193 19 17.5ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+                                        stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    </path>
+                                </svg>
+                                <div>
+                                    Rekap
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="">
+                            <div
+                                class="hover:ml-4 w-full text-white dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M18.5 19.5L20 21M11 21H5.6C5.03995 21 4.75992 21 4.54601 20.891C4.35785 20.7951 4.20487 20.6422 4.10899 20.454C4 20.2401 4 19.9601 4 19.4V17.6841C4 17.0485 4 16.7306 4.04798 16.4656C4.27087 15.2344 5.23442 14.2709 6.46558 14.048C6.5425 14.0341 6.6237 14.0242 6.71575 14.0172C6.94079 14 7.05331 13.9914 7.20361 14.0026C7.35983 14.0143 7.4472 14.0297 7.59797 14.0722C7.74302 14.1131 8.00429 14.2315 8.52682 14.4682C9.13692 14.7446 9.8015 14.9218 10.5 14.9795M19 17.5C19 18.8807 17.8807 20 16.5 20C15.1193 20 14 18.8807 14 17.5C14 16.1193 15.1193 15 16.5 15C17.8807 15 19 16.1193 19 17.5ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+                                        stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    </path>
+                                </svg>
+                                <div>
+                                    Rekap Bulanan
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+    
+                </ul>
+            </li>
+            <a href="">
             <div
                 class="hover:ml-4 w-full text-white hover:text-white-500 dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -183,7 +236,21 @@
                         </path>
                     </svg>
                     <div>
-                        Register
+                        Register Siswa
+                    </div>
+                </div>
+            </a>
+            <a href="{{ route('admin.absen.index') }}">
+                <div
+                    class="hover:ml-4 w-full text-white dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M18.5 19.5L20 21M11 21H5.6C5.03995 21 4.75992 21 4.54601 20.891C4.35785 20.7951 4.20487 20.6422 4.10899 20.454C4 20.2401 4 19.9601 4 19.4V17.6841C4 17.0485 4 16.7306 4.04798 16.4656C4.27087 15.2344 5.23442 14.2709 6.46558 14.048C6.5425 14.0341 6.6237 14.0242 6.71575 14.0172C6.94079 14 7.05331 13.9914 7.20361 14.0026C7.35983 14.0143 7.4472 14.0297 7.59797 14.0722C7.74302 14.1131 8.00429 14.2315 8.52682 14.4682C9.13692 14.7446 9.8015 14.9218 10.5 14.9795M19 17.5C19 18.8807 17.8807 20 16.5 20C15.1193 20 14 18.8807 14 17.5C14 16.1193 15.1193 15 16.5 15C17.8807 15 19 16.1193 19 17.5ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
+                            stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                    </svg>
+                    <div>
+                        Absen Siswa
                     </div>
                 </div>
             </a>
@@ -191,7 +258,7 @@
             <li class="list-none py-2 rounded-full transform ease-in-out duration-300 space-x-3 mt-3 dark:hover:text-blue-500 bg-[#667BC6] hover:ml-4">
                 <button type="button"
                     class="flex items-center w-full px-8 space-x-3 text-base font-normal text-white  dark:hover:text-blue-500 bg-[#1E293B] transition duration-75 rounded-lg group dark:text-white dark:hover:bg-gray-700"
-                    aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                    aria-controls="dropdown-master" data-collapse-toggle="dropdown-master">
                     <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 18V6" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
                         <path d="M20 12L20 18" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
@@ -211,8 +278,8 @@
                             clip-rule="evenodd"></path>
                     </svg>
                 </button>
-                <ul id="dropdown-example" class="hidden py-2 space-y-2 list-none">
-                    <li class="">
+                <ul id="dropdown-master" class="hidden py-2 space-y-2 list-none">
+                    {{-- <li class="">
                         <a href="{{ route('admin.data-master.index-rayon') }}">
                             <div
                                 class="hover:ml-4 w-full text-white dark:hover:text-blue-500 bg-[#667BC6] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
@@ -227,7 +294,7 @@
                                 </div>
                             </div>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="">
                         <a href="{{ route('admin.data-master.index-rombel') }}">
                             <div
@@ -320,6 +387,8 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         const sidebar = document.querySelector("aside");
         const maxSidebar = document.querySelector(".max")
@@ -375,8 +444,11 @@
 
         }
     </script>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 </body>
 
 </html>

@@ -8,5 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class absensi extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'absensi'; 
+    protected $primaryKey = 'id'; 
+
+    protected $fillable = [
+        'name',
+        'id_siswa',
+        'tanggal',
+        'status',
+        'emosi',
+        'foto_siswa',
+    ];
 }

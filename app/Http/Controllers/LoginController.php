@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Ruangan;
+use App\Models\absensi;
+use Illuminate\Support\Facades\DB;
+
 
 class LoginController extends Controller
 {
@@ -39,8 +43,12 @@ class LoginController extends Controller
 
     public function dashboard()
     {
+        
         return view('admin.dashboard.index');
     }
+    
+    
+    
 
     /**
      * Show the form for creating a new resource.
