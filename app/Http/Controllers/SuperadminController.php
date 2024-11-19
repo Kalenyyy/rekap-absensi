@@ -4,17 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\rayon;
-use App\Models\siswa;
 use App\Models\rombel;
-use App\Models\absensi;
-use Illuminate\Support\Str;
-use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
-use App\Models\guru_kejuruan;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Storage;
 
 class SuperadminController extends Controller
 {
@@ -25,7 +17,7 @@ class SuperadminController extends Controller
      */
     public function indexUser()
     {
-        $users = guru_kejuruan::with('user')->get();
+        $users = User::where('role', '!=', 'Admin')->get();
         return view('admin.users.index', compact('users'));
     }
 
@@ -201,16 +193,10 @@ class SuperadminController extends Controller
 
         $userCreate = User::create($userStore);
 
-
-        $guru_ps_store = [
-            'nama' => $userCreate->username,
-            'id_user' => $userCreate->id_user,
-        ];
-
-        guru_kejuruan::create($guru_ps_store);
-
         return redirect()->back()->with('success', 'Data Berhasil Ditambahkan.');
     }
+
+
 
     public function getDataGuru($id)
     {
@@ -220,124 +206,28 @@ class SuperadminController extends Controller
         ]);
     }
 
-    public function indexRegister(Request $request)
+    public function updateGuru(Request $request, $id)
     {
-        // $response = Http::get('https://be-sidata.smkwikrama.sch.id/student');
-
-        $search = $request->input('search');
-        $rombel = $request->input('rombel');
-
-        // Query dasar
-        $query = siswa::query();
-
-        // Jika ada pencarian nama
-        if ($search) {
-            $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($search) . '%']);
-        }
-
-        // Jika ada filter rombel
-        if ($rombel && $rombel !== '') {
-            $query->where('rombel', $rombel);
-        }
-
-        // Mengurutkan data berdasarkan rombel dan kemudian nama
-        $query->orderBy('rombel', 'asc')->orderBy('name', 'asc');
-
-        $data_siswas = $query->paginate(8);
-
-        $rombels = rombel::all();
-        return view('admin.absen.index', ['data_siswas' => $data_siswas, 'rombels' => $rombels]);
-    }
-
-
-
-    public function importSiswa(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,csv',
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'role' => 'required|string',
+            'status' => 'required|string',
+            'password' => 'nullable|min:6', // Password opsional
         ]);
 
-        Excel::import(new SiswaImport, $request->file('file'));
+        $guru = User::findOrFail($id);
+        $guru->username = $validatedData['name'];
+        $guru->email = $validatedData['email'];
+        $guru->role = $validatedData['role'];
+        $guru->status = $validatedData['status'];
 
-        return redirect()->back()->with('success', 'Data imported successfully');
-    }
-
-    public function RegisterSiswa($id)
-    {
-        $siswa = siswa::where('id', $id)->first();
-        return view('admin.absen.register', ['siswa' => $siswa]);
-    }
-
-    public function registerFace(Request $request)
-    {
-        $response = Http::post('http://localhost:5000/register_face', [
-            'name' => $request->input('name'),
-            'nis' => $request->input('nis'),
-            'rayon' => $request->input('rayon'),
-            'rombel' => $request->input('rombel'),
-            'image' => $request->input('image')
-        ]);
-
-        return redirect()->route('admin.register.index')->with('status', $response->json('message'));
-    }
-
-    public function indexAbsen()
-    {
-        return view('admin.absen.absensi');
-    }
-
-    public function recognizeFace(Request $request)
-    {
-        // Mengirim request ke Flask
-        $client = new \GuzzleHttp\Client();
-        $response = $client->post('http://localhost:5000/recognize_face', [
-            'json' => ['image' => $request->image]
-        ]);
-
-        return response()->json(json_decode($response->getBody(), true));
-    }
-
-    public function absenSiswa(Request $request)
-    {
-
-        // Decode the base64 image
-        $imageData = $request->input('image');
-        $image = base64_decode($imageData);
-
-        // Generate a unique name for the image file
-        $imageName = Str::random(10) . '.jpg';
-
-        // Store the image in the public directory (storage/app/public)
-        Storage::disk('public')->put('absensi/' . $imageName, $image);
-
-        // Cari siswa berdasarkan NIS
-        $siswa = Siswa::where('nis', $request->input('nis'))->first();
-
-        // Jika siswa ditemukan
-        if ($siswa) {
-            // Cek apakah sudah absen hari ini
-            $today = now()->format('Y-m-d');
-            $absenHariIni = Absensi::where('id_siswa', $siswa->id)
-                ->whereDate('tanggal', $today)
-                ->exists();
-
-            // Jika sudah absen hari ini, kembalikan dengan pesan error
-            if ($absenHariIni) {
-                return redirect()->back()->with('error', 'Siswa sudah melakukan absensi hari ini.');
-            }
-
-            // Jika belum absen, buat data absensi
-            absensi::create([
-                'name' => $request->input('name'),
-                'id_siswa' => $siswa->id,
-                'tanggal' => now(),
-                'status' => 'Hadir',
-                'foto_siswa' => $imageName, // Simpan nama file gambar
-            ]);
-
-            return redirect()->back()->with('success', 'Absensi berhasil disimpan.');
-        } else {
-            return redirect()->back()->with('error', 'Siswa dengan NIS tersebut tidak ditemukan.');
+        if (!empty($validatedData['password'])) {
+            $guru->password = Hash::make($validatedData['password']);
         }
+
+        $guru->save();
+
+        return response()->json(['message' => 'Data guru berhasil diperbarui']);
     }
 }

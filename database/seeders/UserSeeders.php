@@ -18,9 +18,9 @@ class UserSeeders extends Seeder
             'id_user' => "1",
             'email' => "admin@gmail.com",
             'username' => "admin",
-            'role' => 'admin',
+            'role' => 'Admin',
             "password" => Hash::make("admin"),
-            "status" => 'online',
+            "status" => 'Online',
             //cara lain ekpripsi : bcyrpt
 
 

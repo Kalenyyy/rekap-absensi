@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsensiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SuperadminController;
@@ -35,29 +36,33 @@ Route::post('/login-auth', [LoginController::class, 'loginAuth'])->name('login.a
 Route::middleware('IsLogin')->group(function () {
 
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-    // Route::get('/dashboard', [LoginController::class, 'dashboard'])->name('dashboard');
-    Route::prefix('dashboard')->name('dashboard.')->group(function () {
-        Route::get('/', [LoginController::class, 'dashboard'])->name('index');
-    });
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('index');
+    Route::get('/data-absen', [DashboardController::class, 'dataAbsen'])->name('data-absen');
+    Route::get('/belum-absen', [DashboardController::class, 'getDataSiswaBelumAbsen'])->name('belum-absen');
+    Route::get('/search', [DashboardController::class, 'search'])->name('search');
+    Route::get('/search-absen-today', [DashboardController::class, 'searchAbsenToday'])->name('search.absen.today');
+
 
     Route::middleware("IsAdmin")->group(function () {
         Route::prefix('users')->name('admin.user.')->group(function () {
             Route::get('/', [SuperadminController::class, 'indexUser'])->name('index');
             Route::post('/store-guru', [SuperadminController::class, 'storeDataGuru'])->name('store-guru');
             Route::get('/edit-guru/{id}', [SuperadminController::class, 'getDataGuru']);
+            Route::post('/update-guru/{id}', [SuperadminController::class, 'updateGuru']);
         });
 
         Route::prefix('register-siswa')->name('admin.register.')->group(function () {
-            Route::get('/', [SuperadminController::class, 'indexRegister'])->name('index');
-            Route::get('/siswa/{id}', [SuperadminController::class, 'RegisterSiswa'])->name('RegisterSiswa');
-            Route::post('/import-siswa', [SuperadminController::class, 'importSiswa'])->name('import');
-            Route::post('/register-siswa', [SuperadminController::class, 'registerFace'])->name('register-face');
+            Route::get('/', [AbsensiController::class, 'indexRegister'])->name('index');
+            Route::get('/search', [AbsensiController::class, 'search'])->name('search');
+            Route::get('/siswa/{id}', [AbsensiController::class, 'RegisterSiswa'])->name('RegisterSiswa');
+            Route::post('/import-siswa', [AbsensiController::class, 'importSiswa'])->name('import');
+            Route::post('/register-siswa', [AbsensiController::class, 'registerFace'])->name('register-face');
         });
 
         Route::prefix('absen-siswa')->name('admin.absen.')->group(function () {
-            Route::get('/', [SuperadminController::class, 'indexAbsen'])->name('index');
-            Route::post('/recognize-face', [SuperadminController::class, 'recognizeFace'])->name('recognizeFace');
-            Route::post('/absen-siswa', [SuperadminController::class, 'absenSiswa'])->name('absenSiswa');
+            Route::get('/', [AbsensiController::class, 'indexAbsen'])->name('index');
+            Route::post('/recognize-face', [AbsensiController::class, 'recognizeFace'])->name('recognizeFace');
+            Route::post('/absen-siswa', [AbsensiController::class, 'absenSiswa'])->name('absenSiswa');
         });
 
         Route::prefix('data-master')->name('admin.data-master.')->group(function () {
@@ -73,13 +78,8 @@ Route::middleware('IsLogin')->group(function () {
             Route::patch('/update-rombel/{id}', [SuperadminController::class, 'updateDataRombel']);
         });
 
-        Route::prefix('persntasi')->name('admin.persntasi.')->group(function () {
-            Route::get('/', [PersentasiController::class, 'index'])->name('index');
-        });
-
         Route::prefix('rekap')->name('admin.rekap.')->group(function () {
             Route::get('/', [RekapController::class, 'index'])->name('index');
-            Route::get('/bulanan', [RekapController::class, 'bulanan'])->name('bulanan');
         });
     });
 });

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class siswa extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'id'; 
 
     protected $fillable = [
         'name',

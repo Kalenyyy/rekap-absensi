@@ -1,16 +1,39 @@
 @extends('layouts.template_fix')
 
 @section('content')
-    <div class="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-lg">
-        <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Absensi Face dengan Kamera</h1>
-        <div class="flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8">
-            <!-- Video Kamera -->
-            <div class="relative">
-                <video id="video" autoplay playsinline
-                    class="border-4 border-gray-300 rounded-lg shadow-lg transform scale-x-[-1]" width="640"
-                    height="480"></video>
-                <canvas id="overlay" class="absolute top-0 left-0 w-full h-full"></canvas>
+    <div class="max-w-4xl mx-auto px-4 bg-white rounded-lg shadow-lg">
+        @if (Session::get('success'))
+            <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+                role="alert">
+                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                    <span class="font-medium">Success alert!</span> {{ Session::get('success') }}
+                </div>
             </div>
+        @elseif (Session::get('error'))
+            <div class="flex items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
+                role="alert">
+                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 1 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                    <span class="font-medium">Info alert!</span> {{ Session::get('error') }}
+                </div>
+            </div>
+        @endif
+        <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">Absensi Face dengan IP Webcam</h1>
+        <div class="flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8">
+            <!-- Video Kamera dari IP Webcam -->
+            <img id="cameraStream" crossOrigin="anonymous" width="640" height="480"
+                src="http://192.168.100.52:8080/video" alt="IP Webcam Stream" style="transform: scaleX(-1);">
 
             <!-- Form Registrasi -->
             <form id="absenForm" action="{{ route('admin.absen.absenSiswa') }}" method="POST" enctype="multipart/form-data"
@@ -55,79 +78,59 @@
     </div>
 
     <script>
-        const video = document.getElementById('video');
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        const detectButton = document.getElementById('detect');
-        const saveButton = document.getElementById('saveButton');
-        const imageInput = document.getElementById('image');
+        document.getElementById('detect').addEventListener('click', () => {
+            const videoElement = document.getElementById('cameraStream');
 
-        // Mendapatkan akses ke kamera
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({
-                    video: true
+            // Buat elemen canvas untuk mengambil snapshot dari video IP Webcam
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+
+            // Set ukuran canvas sesuai dengan ukuran video (640x480)
+            canvas.width = 640;
+            canvas.height = 480;
+
+            // Gambar frame video ke canvas
+            context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+            // Konversi canvas ke data URL (base64)
+            const imageData = canvas.toDataURL('image/jpeg');
+            const base64Image = imageData.split(',')[1];
+
+            console.log("Sending image to server for recognition...");
+
+            // Kirim gambar ke Flask untuk deteksi wajah
+            fetch('http://localhost:5001/recognize_face', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        image: base64Image
+                    })
                 })
-                .then(function(stream) {
-                    video.srcObject = stream;
-                    video.play();
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Response from server:", data); // Menampilkan hasil respons di console
+
+                    if (data.status === 'found') {
+                        // Isi form dengan data dari server
+                        document.getElementById('nama').value = data.name;
+                        document.getElementById('nis').value = data.nis;
+                        document.getElementById('rayon').value = data.rayon;
+                        document.getElementById('rombel').value = data.rombel;
+
+                        // Simpan gambar yang sudah diambil ke input hidden
+                        document.getElementById('image').value = base64Image;
+
+                        // Tampilkan tombol simpan
+                        document.getElementById('saveButton').classList.remove('hidden');
+                    } else {
+                        alert('Wajah tidak ditemukan');
+                    }
                 })
-                .catch(function(error) {
-                    console.error('Error accessing the camera:', error);
-                    alert('Tidak dapat mengakses kamera. Pastikan izin diberikan.');
+                .catch(error => {
+                    console.error('Error:', error);
                 });
-        } else {
-            alert('Browser Anda tidak mendukung akses kamera.');
-        }
-
-        detectButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            canvas.width = video.videoWidth * 0.5;
-            canvas.height = video.videoHeight * 0.5;
-
-            if (video.videoWidth > 0 && video.videoHeight > 0) {
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const imageData = canvas.toDataURL('image/jpeg');
-                const base64Image = imageData.split(',')[1];
-
-                console.log("Sending image to server for recognition...");
-
-                // Kirim gambar ke Flask untuk deteksi wajah
-                fetch('http://localhost:5000/recognize_face', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            image: base64Image
-                        })
-                    })
-                    .then(response => {
-                        console.log("Server response:", response);
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log("Data received:", data);
-                        if (data.status === 'found') {
-                            document.getElementById('nama').value = data.name;
-                            document.getElementById('nis').value = data.nis;
-                            document.getElementById('rayon').value = data.rayon;
-                            document.getElementById('rombel').value = data.rombel;
-
-                            // Masukkan base64 image ke input hidden
-                            document.getElementById('image').value = base64Image;
-
-                            saveButton.classList.remove('hidden');
-                        } else {
-                            alert('Wajah tidak ditemukan');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Terjadi kesalahan saat menghubungi server.');
-                    });
-            } else {
-                alert('Video tidak tersedia, pastikan kamera berfungsi dengan baik.');
-            }
         });
     </script>
 @endsection

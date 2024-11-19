@@ -16,7 +16,7 @@
 
 @section('modal')
     <div id="edit-guru-modal" tabindex="1" aria-hidden="true" data-modal-backdrop="false"
-        class="fixed inset-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto bg-black bg-opacity-50 h-screen transition-opacity duration-300 ease-out">
+        class="data-user-id fixed inset-0 z-50 items-center justify-center hidden w-full p-4 overflow-x-hidden overflow-y-auto bg-black bg-opacity-50 h-screen transition-opacity duration-300 ease-out">
         <div class="relative w-full max-w-2xl max-h-full transform transition-transform duration-300 ease-in-out">
             <!-- Modal content -->
             <form class="relative bg-white rounded-lg shadow-lg dark:bg-gray-800">
@@ -58,17 +58,17 @@
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
                             <select id="role_guru" name="role"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option>Laboran</option>
-                                <option>Guru</option>
+                                <option value="Laboran">Laboran</option>
+                                <option value="Guru">Guru</option>
                             </select>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
                             <label for="status_guru"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Status</label>
-                            <select id="status" name="status_guru"
+                            <select id="status_guru" name="status"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option>Online</option>
-                                <option>Offline</option>
+                                <option value="Online">Online</option>
+                                <option value="Offline">Offline</option>
                             </select>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
@@ -86,7 +86,7 @@
                         class="text-gray-500 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg text-sm px-5 py-2.5 dark:text-gray-300 dark:hover:bg-gray-600 dark:focus:ring-gray-600"
                         data-modal-hide="edit-guru-modal">Cancel</button>
                     <button type="submit"
-                        class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save
+                        class="text-white edit-guru bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save
                         Changes</button>
                 </div>
             </form>
@@ -174,12 +174,6 @@
                         type="button" role="tab" aria-controls="guru-ps" aria-selected="false">Guru &
                         Laboran</button>
                 </li>
-                {{-- <li class="me-2" role="presentation">
-                    <button
-                        class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                        id="guru-rayon-tab" data-tabs-target="#guru-rayon" type="button" role="tab"
-                        aria-controls="guru-rayon" aria-selected="false">Guru Rayon</button>
-                </li> --}}
             </ul>
         </div>
 
@@ -250,21 +244,21 @@
                                         <th scope="row"
                                             class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <div class="ps-3">
-                                                <div class="text-base font-semibold">{{ $usr->nama }}</div>
-                                                <div class="font-normal text-gray-500">{{ $usr->user->email }}</div>
+                                                <div class="text-base font-semibold">{{ $usr->username }}</div>
+                                                <div class="font-normal text-gray-500">{{ $usr->email }}</div>
                                             </div>
                                         </th>
                                         <td class="px-6 py-4">
-                                            {{ $usr->user->role }}
+                                            {{ $usr->role }}
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="flex items-center">
-                                                @if ($usr->user->status === 'Offline')
+                                                @if ($usr->status === 'Offline')
                                                     <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
                                                 @else
                                                     <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>
                                                 @endif
-                                                {{ $usr->user->status }}
+                                                {{ $usr->status }}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4">
@@ -287,62 +281,6 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const buttons = document.querySelectorAll('.edit-guru');
-            const modal = document.getElementById('edit-guru-modal');
-            const nameGuru = document.getElementById('name_guru');
-            const email = document.getElementById('email_guru');
-            const role = document.getElementById('role_guru');
-            const status = document.getElementById('status_guru');
-            const password = document.getElementById('password_guru');
-            // const rombelForm = document.getElementById('rombelForm');
-
-            buttons.forEach(button => {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevent default action
-                    const userId = this.getAttribute('id');
-
-                    // Update form action with candidateId
-                    // rombelForm.action =
-                    //     `http://127.0.0.1:8000/data-master/update-rombel/${rombelId}`;
-
-                    $.ajax({
-                        url: `http://127.0.0.1:8000/users/edit-guru/${userId}`,
-                        method: 'GET',
-                        dataType: 'json',
-                        success: function(response) {
-                            console.log(response);
-                            nameGuru.value = response.guru_kejuruan.username;
-                            email.value = response.guru_kejuruan.email;
-                            role.value = response.guru_kejuruan.role;
-                        },
-                        error: function(error) {
-                            console.log(error.responseText);
-                            alert("Error: " + error.responseText);
-                        }
-                    });
-
-                    // Show the modal
-                    modal.classList.remove('hidden');
-                });
-            });
-
-            // rombelForm.addEventListener('submit', function(event) {
-            //     event.preventDefault();
-
-            //     $.ajax({
-            //         url: $(this).attr('action'),
-            //         method: 'POST',
-            //         data: $(this).serialize(), // Serialize form data
-            //         success: function(response) {
-            //             // Lakukan redirect ke halaman yang sama untuk memuat session
-            //             window.location.href = window.location.href;
-            //         },
-            //         error: function(error) {
-            //             alert(error);
-            //         }
-            //     });
-            // });
-        });
+        
     </script>
 @endsection

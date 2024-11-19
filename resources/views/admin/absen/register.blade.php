@@ -9,7 +9,8 @@
                     clipRule="evenodd"></path>
             </svg>
             <a href="{{ route('admin.register.index') }}"
-                class="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">Data Siswa</a>
+                class="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">Data
+                Siswa</a>
         </div>
     </li>
     <li>
@@ -32,8 +33,9 @@
         <div class="flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-16">
             <!-- Video Kamera -->
             <div class="relative">
-                <video id="video" class="border-2 border-gray-200 rounded-md shadow-md" width="640" height="480" autoplay
-                    style="transform: scaleX(-1);"></video>
+                <img id="video" crossOrigin="anonymous" src="http://192.168.137.222:8080/video"
+                    class="border-2 border-gray-200 rounded-md shadow-md" width="640" height="480" autoplay
+                    style="transform: scaleX(-1);">
                 <canvas id="overlay" class="absolute top-0 left-0" width="640" height="480"></canvas>
             </div>
 
@@ -79,30 +81,26 @@
         const registerButton = document.getElementById('register');
         const imageInput = document.getElementById('image');
 
-        // Access camera
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({
-                    video: true
-                })
-                .then(function(stream) {
-                    video.srcObject = stream;
-                })
-                .catch(function(error) {
-                    console.error("Error accessing the camera: ", error);
-                });
-        }
-
         registerButton.addEventListener('click', (event) => {
             event.preventDefault(); // Prevent default form submission
 
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const imageData = canvas.toDataURL('image/jpeg');
-            imageInput.value = imageData.split(',')[1]; // Ambil bagian setelah ','
+            // Set canvas size to match the video stream dimensions
+            canvas.width = video.width;
+            canvas.height = video.height;
 
-            // Submit the form
-            document.getElementById('registerForm').submit();
+            // Draw the current frame from the video (img) onto the canvas
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imageData = canvas.toDataURL('image/jpeg');
+
+            if (imageData) {
+                imageInput.value = imageData.split(',')[1]; // Ambil bagian setelah ','
+
+                // Submit the form
+                document.getElementById('registerForm').submit();
+            } else {
+                console.error("Gambar tidak berhasil ditangkap.");
+            }
         });
     </script>
 @endsection

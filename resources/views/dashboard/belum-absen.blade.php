@@ -17,53 +17,16 @@
 @endsection
 
 @section('content')
-    @if (session('status'))
-        <div id="alert-3"
-            class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
-            role="alert">
-            <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                viewBox="0 0 20 20">
-                <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-            </svg>
-            <span class="sr-only">Info</span>
-            <div class="ms-3 text-sm font-medium">
-                {{ session('status') }}
-            </div>
-            <button type="button"
-                class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"
-                data-dismiss-target="#alert-3" aria-label="Close">
-                <span class="sr-only">Close</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                </svg>
-            </button>
-        </div>
-    @endif
-    <form action="{{ route('admin.register.import') }}" method="POST" enctype="multipart/form-data" class="mb-6">
-        @csrf
-        <div class="flex items-center space-x-4">
-            <input type="file" name="file"
-                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" />
-            <button type="submit"
-                class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">
-                Import
-            </button>
-        </div>
-    </form>
-
     <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-4 md:space-y-0">
         <!-- Judul -->
-        <h1 class="text-3xl font-bold">Data Siswa</h1>
+        <h1 class="text-3xl font-bold">Data Siswa Yang Belum Absen</h1>
 
-        <form class="flex items-center w-1/2 md:w-2/3 lg:w-1/3" action="{{ route('admin.register.index') }}" method="GET">
+        <form class="flex items-center w-1/2 md:w-2/3 lg:w-1/3" action="{{ route('belum-absen') }}" method="GET">
             <!-- Dropdown Rombel -->
             <div class="relative inline-block text-left mr-2 w-full md:w-auto">
                 <select name="rombel" id="rombel"
                     class="w-auto min-w-[200px] py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white dark:border-gray-600 dark:focus:ring-gray-700">
-                    <option value="" hidden>Pilih Rombel</option> <!-- Opsi default -->
+                    <option value="" hidden>Pilih Rombel</option> 
                     @foreach ($rombels as $rombel)
                         <option value="{{ $rombel->name_rombel }}"
                             {{ request('rombel') == $rombel->name_rombel ? 'selected' : '' }}>
@@ -111,7 +74,6 @@
                     <th scope="col" class="px-6 py-3">NIS</th>
                     <th scope="col" class="px-6 py-3">Rayon</th>
                     <th scope="col" class="px-6 py-3">Rombel</th>
-                    <th scope="col" class="px-6 py-3">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -129,23 +91,7 @@
                         <td class="px-6 py-4">{{ $student['nis'] }}</td>
                         <td class="px-6 py-4">{{ $student['rayon'] }}</td>
                         <td class="px-6 py-4">{{ $student['rombel'] }}</td>
-                        <td class="px-6 py-4">
-                            @if ($isRegistered)
-                                <!-- Jika siswa sudah terdaftar, tombol berwarna abu-abu -->
-                                <button type="button"
-                                    class="px-5 py-2.5 text-sm font-medium text-white bg-gray-400 rounded-full cursor-not-allowed">
-                                    Registered
-                                </button>
-                            @else
-                                <!-- Jika belum terdaftar, tombol berwarna biru -->
-                                <a href="{{ route('admin.register.RegisterSiswa', $student['id']) }}">
-                                    <button type="button"
-                                        class="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-blue-700 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
-                                        Register
-                                    </button>
-                                </a>
-                            @endif
-                        </td>
+                        
                     </tr>
                 @endforeach
             </tbody>
@@ -223,7 +169,7 @@
                 let rombel = $('#rombel').val();
 
                 $.ajax({
-                    url: "{{ route('admin.register.search') }}",
+                    url: "{{ route('search') }}",
                     method: 'GET',
                     data: {
                         search: search,
@@ -240,7 +186,7 @@
                 let rombel = $(this).val();
 
                 $.ajax({
-                    url: "{{ route('admin.register.search') }}",
+                    url: "{{ route('search') }}",
                     method: 'GET',
                     data: {
                         search: search,

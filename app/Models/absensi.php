@@ -18,4 +18,8 @@ class absensi extends Model
         'emosi',
         'foto_siswa',
     ];
+
+    public function siswa() {
+        return $this->belongsTo(siswa::class, 'id_siswa', 'id');
+    }
 }
